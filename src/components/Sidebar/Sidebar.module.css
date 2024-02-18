@@ -1,0 +1,82 @@
+.aside {
+  flex: 0 0 225px;
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #edf5fe;
+  font-family: "Poppins", sans-serif;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  margin-left: 5px;
+}
+
+.logoText {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+.navList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem {
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.navItem:hover {
+  background-color: #edf5fe;
+}
+
+.navLink {
+  color: #000;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  color: #707070;
+}
+
+.linkText {
+  font-size: 1rem;
+}
+
+.logout {
+  margin-top: auto;
+}
+
+.logoutLink {
+  color: red;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.logoutIcon {
+  color: red;
+  margin-left: 5px;
+}
+
+.logoutText {
+  font-size: 1rem;
+}
