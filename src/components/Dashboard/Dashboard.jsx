@@ -6,18 +6,9 @@ import { IoIosArrowUp } from "react-icons/io";
 import styles from "./Dashboard.module.css";
 
 // Individual section component for better modularity
-function Section() {
+function Card() {
   return (
-    <article className={styles.section}>
-      {/* Subsection */}
-      <div className={styles.subsection}>
-        <h4>Backlog</h4>
-        <div className={styles.iconContainer}>
-          <FaPlus className={styles.icon} />
-          <VscCollapseAll className={styles.icon} />
-        </div>
-      </div>
-
+    <>
       {/* Inner Subsection */}
       <div className={styles.innerSubsection}>
         {/* Priority Subsection */}
@@ -77,6 +68,25 @@ function Section() {
           </div>
         </div>
       </div>
+    </>
+  );
+}
+
+function Section() {
+  return (
+    <article className={styles.section}>
+      {/* Subsection */}
+      <div className={styles.subsection}>
+        <h4>Backlog</h4>
+        <div className={styles.iconContainer}>
+          <FaPlus className={styles.icon} />
+          <VscCollapseAll className={styles.icon} />
+        </div>
+      </div>
+
+      {/* Cards */}
+      <Card />
+      <Card />
     </article>
   );
 }
