@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import { FaCircle } from "react-icons/fa";
 import { PiDotsThreeBold } from "react-icons/pi";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
@@ -23,6 +23,11 @@ const Card = React.memo(
           return "";
       }
     };
+
+    useEffect(() => {
+      // Update the child component state when the prop changes
+      setIsChecklistOpen(false);
+    }, [isCollapsed]);
 
     const toggleChecklist = () => {
       setIsChecklistOpen((prevState) => !prevState);
@@ -69,7 +74,7 @@ const Card = React.memo(
                 {checklistState.length})
               </span>
             </label>
-            {isChecklistOpen ? (
+            {!isChecklistOpen ? (
               <IoIosArrowDown
                 className={styles.icon}
                 onClick={toggleChecklist}
