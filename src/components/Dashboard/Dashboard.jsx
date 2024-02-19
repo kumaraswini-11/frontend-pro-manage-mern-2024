@@ -1,129 +1,211 @@
-import React from "react";
-import { FaPlus, FaCircle } from "react-icons/fa";
-import { VscCollapseAll } from "react-icons/vsc";
-import { PiDotsThreeBold } from "react-icons/pi";
-import { IoIosArrowUp } from "react-icons/io";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../redux/slices/authenticationSlice";
+import { Section } from "../";
 import styles from "./Dashboard.module.css";
 
-// Individual section component for better modularity
-function Card() {
-  return (
-    <>
-      {/* Inner Subsection */}
-      <div className={styles.innerSubsection}>
-        {/* Priority Subsection */}
-        <div className={styles.prioritySubsection}>
-          <div className={styles.priority}>
-            <span>
-              <FaCircle className={styles.dotIcon} />
-            </span>
-            <span className={styles.priorityText}>High priority</span>
-          </div>
-          <PiDotsThreeBold className={styles.icon} />
-        </div>
+const dummyTodos = [
+  {
+    _id: "1",
+    title: "Complete Project Proposal",
+    priority: "High",
+    dueDate: "2024-03-01",
+    section: "Backlog",
+    checklists: [
+      {
+        _id: "1",
+        checklistText: "Research project requirements",
+        isComplete: true,
+      },
+      {
+        _id: "2",
+        checklistText: "Draft proposal outline",
+        isComplete: false,
+      },
+      {
+        _id: "3",
+        checklistText: "Gather necessary resources",
+        isComplete: false,
+      },
+    ],
+    link: "https://example.com/project-proposal",
+  },
+  {
+    _id: "2",
+    title: "Prepare Presentation Slides",
+    priority: "Moderate",
+    dueDate: "2024-02-28",
+    section: "ToDo",
+    checklists: [
+      {
+        _id: "4",
+        checklistText: "Create slide templates",
+        isComplete: true,
+      },
+      {
+        _id: "5",
+        checklistText: "Outline presentation content",
+        isComplete: true,
+      },
+      {
+        _id: "6",
+        checklistText: "Gather data and visuals",
+        isComplete: false,
+      },
+    ],
+    link: "https://example.com/presentation",
+  },
+  {
+    _id: "3",
+    title: "Prepare Presentation Slides",
+    priority: "Low",
+    dueDate: "2024-02-28",
+    section: "In Progress",
+    checklists: [
+      {
+        _id: "7",
+        checklistText: "Create slide templates",
+        isComplete: true,
+      },
+      {
+        _id: "8",
+        checklistText: "Outline presentation content",
+        isComplete: true,
+      },
+      {
+        _id: "9",
+        checklistText: "Gather data and visuals",
+        isComplete: false,
+      },
+    ],
+    link: "https://example.com/presentation",
+  },
+  {
+    _id: "4",
+    title: "Prepare Presentation Slides",
+    priority: "High",
+    dueDate: "2024-02-28",
+    section: "Done",
+    checklists: [
+      {
+        _id: "10",
+        checklistText: "Create slide templates",
+        isComplete: true,
+      },
+      {
+        _id: "11",
+        checklistText: "Outline presentation content",
+        isComplete: true,
+      },
+      {
+        _id: "12",
+        checklistText: "Gather data and visuals",
+        isComplete: false,
+      },
+    ],
+    link: "https://example.com/presentation",
+  },
+  {
+    _id: "5",
+    title: "Prepare 5th Presentation Slides",
+    priority: "Moderate",
+    dueDate: "2024-02-15",
+    section: "Backlog",
+    checklists: [
+      {
+        _id: "13",
+        checklistText: "Create slide templates",
+        isComplete: true,
+      },
+      {
+        _id: "14",
+        checklistText: "Outline presentation content",
+        isComplete: false,
+      },
+      {
+        _id: "15",
+        checklistText: "Gather data and visuals",
+        isComplete: false,
+      },
+    ],
+    link: "https://example.com/presentation",
+  },
+];
 
-        {/* Hero Title */}
-        <h4 className={styles.heroTitle}>Hero Section</h4>
+const options = ["This week", "This month", "This year"];
+const sections = ["Backlog", "ToDo", "In Progress", "Done"];
 
-        {/* Checklist Subsection */}
-        <div className={styles.checklistSubsection}>
-          <div className={styles.checklist}>
-            <label>
-              <span>Checklist</span>
-              <span>(1/3)</span>
-            </label>
-            <IoIosArrowUp className={styles.icon} />
-          </div>
-          <div className={styles.tasks}>
-            {/* Task */}
-            <div className={styles.task}>
-              <input type="checkbox" id="task1" />
-              <label htmlFor="task1">Task to be done 1</label>
-            </div>
-            {/* Task */}
-            <div className={styles.task}>
-              <input type="checkbox" id="task2" />
-              <label htmlFor="task2">Task to be done 2</label>
-            </div>
-            {/* Task */}
-            <div className={styles.task}>
-              <input type="checkbox" id="task3" />
-              <label htmlFor="task3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti inventore dignissimos, labore pariatur officia
-                similique tempora repellat, cum vitae quasi amet, sunt deleniti
-                natus animi itaque ea accusantium? Possimus, doloribus.
-              </label>
-            </div>
-          </div>
-        </div>
+const Dashboard = () => {
+  const [todaysDate, setTodaysDate] = useState("");
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [todos, setTodos] = useState(dummyTodos);
+  const userData = useSelector(selectUserData);
 
-        {/* Options Subsection */}
-        <div className={styles.optionsSubsection}>
-          <div className={styles.date}>Feb 10th</div>
-          <div className={styles.subOptions}>
-            <div className={styles.option}>Backlog</div>
-            <div className={styles.option}>Progress</div>
-            <div className={styles.option}>Done</div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
+  useEffect(() => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+    setTodaysDate(formattedDate);
+  }, []);
 
-function Section() {
-  return (
-    <article className={styles.section}>
-      {/* Subsection */}
-      <div className={styles.subsection}>
-        <h4>Backlog</h4>
-        <div className={styles.iconContainer}>
-          <FaPlus className={styles.icon} />
-          <VscCollapseAll className={styles.icon} />
-        </div>
-      </div>
+  const handleSelectChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
 
-      {/* Cards */}
-      <Card />
-      <Card />
-    </article>
-  );
-}
+  const renderSections = () => {
+    // Initialize an object to store todos grouped by section
+    const todosBySection = Object.fromEntries(
+      sections.map((section) => [section, []])
+    );
 
-// Main Dashboard Component
-function Dashboard() {
+    // Group todos by section
+    todos.forEach((todo) => {
+      const sectionName = todo.section;
+      todosBySection[sectionName].push(todo);
+    });
+
+    return (
+      <>
+        {/* Map over sections and render Section components */}
+        {sections.map((sectionName, index) => (
+          <Section
+            key={index}
+            title={sectionName}
+            plusIcon={sectionName === sections[1]}
+            todosBySection={todosBySection[sectionName]}
+            sections={sections}
+          />
+        ))}
+      </>
+    );
+  };
+
   return (
     <div className={styles.mainSubContainer}>
-      {/* Header */}
       <div className={styles.header}>
-        <h2>Welcome! Kumar</h2>
-        <time dateTime="2024-01-12">12th Jan, 2024</time>
+        <h2>Welcome! {userData?.userName ?? "Kumar"}</h2>
+        <time dateTime={todaysDate}>{todaysDate}</time>
       </div>
-
-      {/* Main Content */}
       <section className={styles.content}>
-        {/* Heading Section */}
         <div className={styles.heading}>
           <h3>Board</h3>
-          <select className={styles.select}>
-            <option>This week</option>
-            <option>This month</option>
-            <option>This year</option>
+          <select
+            className={styles.select}
+            value={selectedOption}
+            onChange={handleSelectChange}
+          >
+            {options.map((option, index) => (
+              <option key={index}>{option}</option>
+            ))}
           </select>
         </div>
-
-        {/* Container Section */}
-        <div className={styles.container}>
-          {/* Section repeated 3 more times */}
-          <Section />
-          <Section />
-          <Section />
-          <Section />
-        </div>
+        <div className={styles.container}>{renderSections()}</div>
       </section>
     </div>
   );
-}
+};
 
 export default Dashboard;

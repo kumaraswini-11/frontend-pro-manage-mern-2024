@@ -4,6 +4,8 @@ import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
 import Sidebar from "./Sidebar/Sidebar";
 import Dashboard from "./Dashboard/Dashboard";
+import Section from "./Dashboard/Section";
+import Card from "./Dashboard/Card";
 import Setting from "./Setting";
 
 export {
@@ -13,5 +15,7 @@ export {
   LoginForm,
   Sidebar,
   Dashboard,
+  Section,
+  Card,
   Setting,
 };
