@@ -32,7 +32,8 @@ const dummyTodos = [
   },
   {
     _id: "2",
-    title: "Prepare Presentation Slides",
+    title:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis esse sapiente nesciunt labore id architecto.",
     priority: "Moderate",
     dueDate: "2024-02-28",
     section: "ToDo",
@@ -44,7 +45,8 @@ const dummyTodos = [
       },
       {
         _id: "5",
-        checklistText: "Outline presentation content",
+        checklistText:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis esse sapiente nesciunt labore id architecto, excepturi cumque illum sint laborum animi deserunt porro perferendis recusandae iure harum magnam eius eos.",
         isComplete: true,
       },
       {
@@ -132,13 +134,14 @@ const dummyTodos = [
   },
 ];
 
-const options = ["This week", "This month", "This year"];
+const options = ["week", "month", "year"];
 const sections = ["Backlog", "ToDo", "In Progress", "Done"];
 
 const Dashboard = () => {
   const [todaysDate, setTodaysDate] = useState("");
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const [todos, setTodos] = useState(dummyTodos);
+  const [openDropdownId, setOpenDropdownId] = useState(null);
   const userData = useSelector(selectUserData);
 
   useEffect(() => {
@@ -150,6 +153,10 @@ const Dashboard = () => {
     });
     setTodaysDate(formattedDate);
   }, []);
+
+  const toggleDropdown = (todoId) => {
+    setOpenDropdownId((prevId) => (prevId === todoId ? null : todoId));
+  };
 
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
@@ -177,6 +184,8 @@ const Dashboard = () => {
             plusIcon={sectionName === sections[1]}
             todosBySection={todosBySection[sectionName]}
             sections={sections}
+            openDropdownId={openDropdownId}
+            toggleDropdown={toggleDropdown}
           />
         ))}
       </>
@@ -186,7 +195,9 @@ const Dashboard = () => {
   return (
     <div className={styles.mainSubContainer}>
       <div className={styles.header}>
-        <h2>Welcome! {userData?.userName ?? "Kumar"}</h2>
+        <h2 className={styles.greetingText}>
+          Welcome! {userData?.userName ?? "Kumar"}
+        </h2>
         <time dateTime={todaysDate}>{todaysDate}</time>
       </div>
       <section className={styles.content}>
@@ -198,7 +209,7 @@ const Dashboard = () => {
             onChange={handleSelectChange}
           >
             {options.map((option, index) => (
-              <option key={index}>{option}</option>
+              <option key={index}>{`This ${option}`}</option>
             ))}
           </select>
         </div>

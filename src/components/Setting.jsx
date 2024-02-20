@@ -1,6 +1,8 @@
-import { TiUserOutline } from "react-icons/ti";
-import { RiLock2Line } from "react-icons/ri";
-import { PiEyeLight } from "react-icons/pi";
+import {
+  TiUserOutline,
+  RiLock2Line,
+  PiEyeLight,
+} from "../utils/IconExports.js";
 import styles from "../styles/SettingPage.module.css";
 
 function Setting() {

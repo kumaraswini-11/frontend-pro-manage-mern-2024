@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import { FiLayout } from "react-icons/fi";
-import { GoDatabase } from "react-icons/go";
-import { CiSettings } from "react-icons/ci";
-import { IoLogOutOutline } from "react-icons/io5";
+import {
+  FiLayout,
+  GoDatabase,
+  CiSettings,
+  IoLogOutOutline,
+} from "../../utils/IconExports.js";
 import ProManageLogo from "../../assets/images/ProManageLogo.png";
 import styles from "./Sidebar.module.css";
 

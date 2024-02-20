@@ -1,11 +1,14 @@
 .mainSubContainer {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
   width: 30%;
   min-width: 200px;
 }
 .title {
   margin-bottom: 40px;
-  font-size: 1.2rem;
   font-weight: 600;
+  font-size: 1.375rem;
 }
 
 .inputContainerGroup {

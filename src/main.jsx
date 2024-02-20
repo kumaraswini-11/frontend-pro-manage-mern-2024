@@ -15,11 +15,13 @@ const Login = lazy(() => import("./pages/LoginPage.jsx"));
 const Dashboard = lazy(() => import("./pages/DashboardPage.jsx"));
 const Analytics = lazy(() => import("./pages/AnalyticsPage.jsx"));
 const Setting = lazy(() => import("./pages/SettingPage.jsx"));
+const SharedTodo = lazy(() => import("./pages/SharedTodoPage.jsx"));
 
 const route = createBrowserRouter([
   // Unprotected route
   { path: "/", element: <Register /> },
   { path: "/login", element: <Login /> },
+  { path: "/shared-todo/:sharedId", element: <SharedTodo /> },
 
   // Protected routes
   {

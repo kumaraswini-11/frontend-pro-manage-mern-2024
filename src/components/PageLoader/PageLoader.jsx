@@ -1,5 +1,4 @@
-import React from "react";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader2 } from "../../utils/IconExports.js";
 import styles from "./PageLoader.module.css";
 
 const PageLoader = () => (

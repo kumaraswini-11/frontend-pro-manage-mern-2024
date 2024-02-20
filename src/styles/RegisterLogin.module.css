@@ -1,8 +1,11 @@
 /* Container styles */
 .registerContainer {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
   display: flex;
   justify-content: center;
-  margin: 7% auto;
+  margin: 8% auto;
   width: 65%;
   padding: 5px;
   min-height: 65vh;
@@ -34,7 +37,8 @@
   margin: 0;
 }
 .leftSide h2 {
-  font-size: 1.3rem;
+  font-weight: 600;
+  font-size: 2rem;
   margin-top: 10px;
 }
 
@@ -112,7 +116,6 @@
 
 .buttonContainer p {
   color: #828282;
-  font-size: 0.75rem;
   margin: 10px 0;
 }
 
@@ -122,6 +125,17 @@
   padding: 10px 10px;
   width: 100%;
   cursor: pointer;
+}
+
+/* Disabled button styles */
+.button[disabled] {
+  /* Reduce opacity for disabled buttons */
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* Hover effect for enabled buttons */
+.button:not([disabled]):hover {
+  opacity: 0.9;
 }
 
 .button.primary {

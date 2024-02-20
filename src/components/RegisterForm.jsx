@@ -1,7 +1,9 @@
-import { TiUserOutline } from "react-icons/ti";
-import { AiOutlineMail } from "react-icons/ai";
-import { RiLock2Line } from "react-icons/ri";
-import { PiEyeLight } from "react-icons/pi";
+import {
+  TiUserOutline,
+  AiOutlineMail,
+  RiLock2Line,
+  PiEyeLight,
+} from "../utils/IconExports.js";
 import styles from "../styles/RegisterLogin.module.css";
 
 function RegisterForm() {

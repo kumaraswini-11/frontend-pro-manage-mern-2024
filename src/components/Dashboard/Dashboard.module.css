@@ -1,5 +1,7 @@
 /* Global styles */
 .mainSubContainer {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
   display: flex;
   flex-direction: column;
   max-height: 100%;
@@ -11,16 +13,16 @@
 
 /* Header styles */
 .header {
+  font-weight: 600;
+  /* font-size: 1.375rem; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: 600;
-  font-size: 0.8em;
   margin-bottom: 20px;
 }
 .header > time {
   font-weight: 500;
-  font-size: 1.2em;
+  font-size: 1.25rem;
   color: #707070;
 }
 
@@ -38,11 +40,14 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+.heading h3 {
   font-weight: 500;
-  font-size: 1.2em;
 }
 .select {
   border: 1px solid #000000;
+  font-size: 1rem;
 }
 
 /* Container styles */
@@ -50,16 +55,20 @@
   display: flex;
   gap: 20px;
   width: 100%;
-  height: 93%;
+  height: 90%;
   padding-bottom: 5px;
   flex: 1;
-  /* border: 2px solid black; */
+
   /* Add horizontal scrollbar if content overflows horizontally */
+  scrollbar-gutter: stable;
   overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #8daab9 #d6eaf4;
 }
 
 /* Section styles */
 .section {
+  font-weight: 500;
   flex: 1;
   min-width: 27%;
   background-color: #eef2f5;
@@ -69,8 +78,10 @@
 }
 .scrollableSection {
   max-height: 100%;
+  scrollbar-gutter: stable;
   overflow-y: auto;
-  scrollbar-color: #8daab9;
+  scrollbar-color: #8daab9 #d6eaf4;
+  scrollbar-width: thin;
 }
 
 /* Subsection styles */
@@ -80,6 +91,13 @@
   justify-content: space-between;
   align-items: baseline;
   padding: 10px;
+}
+.subsection h4 {
+  font-weight: 500;
+}
+.greetingText {
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 /* Inner subsection styles */
@@ -137,13 +155,15 @@
 /* Priority text styles */
 .priorityText {
   font-weight: 500;
-  font-size: 0.6em;
+  font-size: 0.5em;
   margin-right: 10px;
 }
 
 /* Hero title styles */
 .heroTitle {
   margin-bottom: 15px;
+  font-weight: 500;
+  font-size: 1.125rem;
 }
 
 /* Checklist subsection styles */
@@ -160,8 +180,7 @@
   margin-bottom: 15px;
 }
 .checklist > label {
-  font-size: 1em;
-  font-weight: 600;
+  font-size: 0.875rem;
   margin-right: 10px;
 }
 .checklist > .icon {
@@ -172,6 +191,9 @@
 
 /* Task styles */
 .tasks {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
@@ -180,29 +202,57 @@
 .task {
   margin-bottom: 5px;
   border: 1px solid #e2e2e2;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 10px;
 }
-.task > input[type="checkbox"] {
+.task input[type="checkbox"] {
+  display: none;
+}
+.task label::before {
+  content: "";
+  display: inline-block;
+  /* custom checkbox size */
+  width: 14px;
+  height: 14px;
+  background-color: #fff;
   border: 2px solid #e2e2e2;
-  border-radius: 10px;
-  width: 17px;
-  height: 17px;
-  cursor: pointer;
-  outline: none;
+  border-radius: 6px;
+  position: absolute;
+  left: 0;
+  top: 5px;
 }
-.task > input[type="checkbox"]:checked {
-  background-color: #90c4cc;
+.task input[type="checkbox"]:checked + label::before {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
 }
-.task > label {
-  font-weight: 400;
-  font-size: 0.9em;
-  margin-left: 5px;
+.task label::after {
+  /* Unicode character for check mark */
+  content: "\2714";
+  /* Adjust this value to change the size of the check mark */
+  color: #fff;
+  position: absolute;
+  /* Adjust this value to center the check mark horizontally & vertically*/
+  left: 2px;
+  top: 3px;
+  /* Hide the check mark by default */
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.task input[type="checkbox"]:checked + label::after {
+  /* Show the check mark when the checkbox is checked */
+  opacity: 1;
+}
+.task label {
+  display: inline-block;
+  position: relative;
+  /* Adjust this value to change the distance between the checkbox and the label */
+  padding-left: 25px;
   cursor: pointer;
 }
 
 /* Options subsection styles */
 .optionsSubsection {
+  font-size: 0.5em;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -220,7 +270,6 @@
   color: white;
   border-radius: 10px;
   padding: 6px;
-  font-size: 0.6em;
 }
 
 /* Options styles */
@@ -229,14 +278,12 @@
   color: #767575;
   border-radius: 10px;
   padding: 6px;
-  font-size: 0.6em;
   cursor: pointer;
   text-transform: uppercase;
 }
 
 @media (max-width: 986px) {
   /* Media query for screens narrower than 986px */
-
   .subOptions {
     flex-direction: column;
     flex-wrap: wrap;
@@ -245,7 +292,6 @@
 
 @media (min-width: 450px) and (max-width: 768px) {
   /* Media query for screens between 768px and 450px */
-
   .container {
     flex-direction: column;
   }

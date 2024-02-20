@@ -1,4 +1,6 @@
 .subContainer {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
   width: 100%;
   /* height: 25vh; */
   display: flex;
@@ -8,8 +10,8 @@
 
 .title {
   margin-bottom: 25px;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.375rem;
+  font-size: 600;
 }
 
 .section {
@@ -37,12 +39,11 @@
 
 .priorityText {
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 1.125rem;
 }
 
 .priorityCount {
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   margin-left: auto;
 }
 

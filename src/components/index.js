@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar/Sidebar";
 import Dashboard from "./Dashboard/Dashboard";
 import Section from "./Dashboard/Section";
 import Card from "./Dashboard/Card";
+import DropdownMenu from "./DropdownMenu/DropdownMenu";
 import Setting from "./Setting";
 
 export {
@@ -17,5 +18,6 @@ export {
   Dashboard,
   Section,
   Card,
+  DropdownMenu,
   Setting,
 };

@@ -1,6 +1,8 @@
-import { AiOutlineMail } from "react-icons/ai";
-import { RiLock2Line } from "react-icons/ri";
-import { PiEyeLight } from "react-icons/pi";
+import {
+  AiOutlineMail,
+  RiLock2Line,
+  PiEyeLight,
+} from "../utils/IconExports.js";
 import styles from "../styles/RegisterLogin.module.css";
 
 function LoginForm() {
@@ -27,9 +29,17 @@ function LoginForm() {
         </div>
       </div>
       <div className={styles.buttonContainer}>
-        <button className={`${styles.button} ${styles.primary}`}>Log in</button>
+        <button
+          className={`${styles.button} ${styles.primary}`}
+          disabled={false}
+        >
+          Log in
+        </button>
         <p>Have no account yet?</p>
-        <button className={`${styles.button} ${styles.secondary}`}>
+        <button
+          className={`${styles.button} ${styles.secondary}`}
+          disabled={false}
+        >
           Register
         </button>
       </div>

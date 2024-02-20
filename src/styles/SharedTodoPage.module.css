@@ -1,0 +1,116 @@
+body {
+  font-family: "Poppins", sans-serif;
+  /* font-family: "Inter", sans-serif;  */
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.main {
+  max-width: 800px;
+  /* max-height: 900px; */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.task {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 50px 10px 50px;
+  /* height: 846px; */
+  max-height: 782px;
+  width: 654px;
+  top: 131px;
+  left: 457px;
+}
+
+.taskHeader {
+  padding: 10px;
+  background-color: #fff;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.icon {
+  color: red;
+  width: 10px;
+  height: 10px;
+}
+
+.priority {
+  font-weight: bold;
+}
+
+.taskTitle {
+  padding: 10px;
+  font-size: 20px;
+}
+
+.taskDetails {
+  padding: 30px 10px 0px;
+  width: 620px;
+  /* height: 322px; */
+  max-height: 782px;
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack items vertically */
+  /* gap: 20px; */
+}
+
+/* .taskItem:last-child {
+  margin-bottom: 0; /* Remove margin bottom from the last child 
+} */
+.taskListContainer {
+  /* only scroll vertically  */
+  scroll-behavior: auto;
+  overflow-y: auto; /* Enable vertical scrollbar */
+  height: 400px; /* Set a fixed height */
+  padding-right: 15px; /* Add space for the scrollbar */
+  margin-top: 18px;
+  /* flex: 1; */
+}
+
+.taskItem {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 11px;
+  margin-bottom: 18px;
+}
+
+.taskItem input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.dueDate {
+  margin-top: 10px;
+}
+
+.dueDateText {
+}
+
+.dueDateValue {
+  background-color: red;
+  border-radius: 3px;
+  padding: 5px;
+  color: #fff;
+}
+
+/* Style scrollbar track */
+.taskListContainer::-webkit-scrollbar-track {
+  width: 10px; /* Width of the scrollbar */
+  background-color: #9cb7c5; /* Background color of the scrollbar track */
+}
+
+/* Style scrollbar thumb */
+.taskListContainer::-webkit-scrollbar-thumb {
+  width: 10px; /* Width of the scrollbar thumb */
+  background-color: #9cb7c5; /* Background color of the scrollbar thumb */
+  border: 1px solid #000; /* Border of the scrollbar thumb */
+  border-width: 1px 0 0 0; /* Border width of the scrollbar thumb */
+  transform: rotate(90deg); /* Rotate the scrollbar thumb 90 degrees */
+}
