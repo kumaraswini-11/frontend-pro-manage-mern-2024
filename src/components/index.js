@@ -6,7 +6,11 @@ import Sidebar from "./Sidebar/Sidebar";
 import Dashboard from "./Dashboard/Dashboard";
 import Section from "./Dashboard/Section";
 import Card from "./Dashboard/Card";
-import DropdownMenu from "./DropdownMenu/DropdownMenu";
+import DropdownContainer from "./DropdownContainer/DropdownContainer";
+import Modal from "./Modal/Modal";
+import AddEditModal from "./Dashboard/AddEditModal/AddEditModal";
+import ConfirmModal from "./Dashboard/ConfirmModal/ConfirmModal";
+import CustomInput from "./Dashboard/CustomInput/CustomInput";
 import Setting from "./Setting";
 
 export {
@@ -18,6 +22,10 @@ export {
   Dashboard,
   Section,
   Card,
-  DropdownMenu,
+  DropdownContainer,
+  Modal,
+  AddEditModal,
+  ConfirmModal,
+  CustomInput,
   Setting,
 };

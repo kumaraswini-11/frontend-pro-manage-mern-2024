@@ -1,14 +1,18 @@
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import {
   FiLayout,
   GoDatabase,
   CiSettings,
   IoLogOutOutline,
-} from "../../utils/IconExports.js";
+} from "../../utils/iconExports.js";
 import ProManageLogo from "../../assets/images/ProManageLogo.png";
+import { ConfirmModal } from "../";
 import styles from "./Sidebar.module.css";
 
 function Sidebar() {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
   return (
     <aside className={styles.aside}>
       {/* Brand */}
@@ -24,35 +28,49 @@ function Sidebar() {
       {/* Navigation Links */}
       <nav className={styles.nav}>
         <ul className={styles.navList}>
-          <li className={styles.navItem}>
-            <Link to="/dashboard" className={styles.navLink}>
-              <FiLayout className={styles.icon} />
-              <span className={styles.linkText}>Board</span>
-            </Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link to="/analytics" className={styles.navLink}>
-              <GoDatabase className={styles.icon} />
-              <span className={styles.linkText}>Analytics</span>
-            </Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link to="/setting" className={styles.navLink}>
-              <CiSettings className={styles.icon} />
-              <span className={styles.linkText}>Settings</span>
-            </Link>
-          </li>
+          <NavItem to="/dashboard" icon={<FiLayout />} text="Board" />
+          <NavItem to="/analytics" icon={<GoDatabase />} text="Analytics" />
+          <NavItem to="/setting" icon={<CiSettings />} text="Settings" />
         </ul>
       </nav>
 
       {/* Logout */}
       <div className={styles.logout}>
-        <Link to="/login" className={styles.logoutLink}>
+        <Link
+          to=""
+          className={styles.logoutLink}
+          onClick={() => setShowLogoutModal(true)}
+        >
           <IoLogOutOutline className={`${styles.icon} ${styles.logoutIcon}`} />
           <span className={styles.logoutText}>Log out</span>
         </Link>
       </div>
+
+      {/* Render Logout Modal */}
+      {showLogoutModal && (
+        <ConfirmModal
+          isOpen={showLogoutModal}
+          setIsOpen={setShowLogoutModal}
+          isDeleteModal={true}
+        />
+      )}
     </aside>
+  );
+}
+
+function NavItem({ to, icon, text }) {
+  return (
+    <li className={styles.navItem}>
+      <NavLink
+        to={to}
+        className={({ isActive }) =>
+          `${styles.navLink} ${isActive ? styles.selected : ""}`
+        }
+      >
+        <span className={styles.icon}>{icon}</span>
+        <span className={styles.linkText}>{text}</span>
+      </NavLink>
+    </li>
   );
 }
 

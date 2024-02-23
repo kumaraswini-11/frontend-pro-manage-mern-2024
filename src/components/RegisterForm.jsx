@@ -3,7 +3,7 @@ import {
   AiOutlineMail,
   RiLock2Line,
   PiEyeLight,
-} from "../utils/IconExports.js";
+} from "../utils/iconExports.js";
 import styles from "../styles/RegisterLogin.module.css";
 
 function RegisterForm() {

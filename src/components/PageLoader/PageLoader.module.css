@@ -1,3 +1,4 @@
+/* Loader Overlay */
 .loaderOverlay {
   position: fixed;
   top: 0;
@@ -11,12 +12,14 @@
   z-index: 9999;
 }
 
+/* Loader Icon */
 .loaderIcon {
   font-size: 3rem;
   animation: rotate 1.5s linear infinite;
   color: #ffffff;
 }
 
+/* Loader Animation */
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -26,6 +29,7 @@
   }
 }
 
+/* Loading Text */
 .loadingText {
   margin-top: 10px;
   font-weight: bold;

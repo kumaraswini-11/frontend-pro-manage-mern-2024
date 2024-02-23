@@ -2,7 +2,7 @@ import {
   TiUserOutline,
   RiLock2Line,
   PiEyeLight,
-} from "../utils/IconExports.js";
+} from "../utils/iconExports.js";
 import styles from "../styles/SettingPage.module.css";
 
 function Setting() {

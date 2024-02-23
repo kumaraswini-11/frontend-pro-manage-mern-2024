@@ -1,10 +1,16 @@
 import styles from "./DropdownMenu.module.css";
 
-const DropdownMenu = ({ options, onSelect, xPos, yPos }) => {
+const DropdownContainer = ({
+  options,
+  onSelect,
+  isTimeDropdownToggle = false,
+}) => {
   return (
     <div
       className={styles.dropdownMenu}
-      // style={{ top: yPos, left: xPos }}
+      // style={{
+      //   transform: isTimeDropdownToggle ? "translateX(-30%)" : undefined,
+      // }}
     >
       <ul>
         {options?.map((option, index) => (
@@ -23,4 +29,4 @@ const DropdownMenu = ({ options, onSelect, xPos, yPos }) => {
   );
 };
 
-export default DropdownMenu;
+export default DropdownContainer;

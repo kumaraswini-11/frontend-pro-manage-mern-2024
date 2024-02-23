@@ -1,0 +1,144 @@
+.formFields {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.required {
+  color: #ff0000;
+  margin-left: 2px;
+}
+
+/* Title field */
+.formFieldTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.formFieldTitle > input {
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  padding: 10px 16px;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Priority filed */
+.formFieldPriority {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.priorityOption {
+  padding: 5px 10px;
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #fff;
+  flex: 1;
+}
+/* .priorityOption:hover {
+  background-color: #eeecec;
+  opacity: 0.75;
+} */
+.priorityTab {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  /* gap: 5px; */
+}
+.dotIcon {
+  margin-right: 8px;
+  width: 8px;
+  height: 8px;
+}
+.priorityText {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 0.875em;
+  color: #767575;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Todo items filed */
+.formFieldTodoItems {
+  margin-top: 10px;
+}
+.todoItems {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 100%;
+  height: 290px;
+}
+.todoItemsScroll {
+  margin-top: 10px;
+  /* Scroling Effect */
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-color: #9cb7c5 #fff;
+  /* scrollbar-width: thin; */
+  /* max-height: 200px; */
+}
+.todoItem {
+  border: 1px solid #e2e2e2;
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 10px;
+}
+.addNew {
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #767575;
+  cursor: pointer;
+}
+
+/* footer */
+.footer {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.button {
+  border-radius: 12px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 1rem;
+  color: #707070;
+  box-shadow: 0 2px 12px 0 rgba(130, 105, 140, 0.2);
+}
+.formFieldDueDate > label,
+.dueDateButton {
+  border: 1px solid #e2e2e2;
+  width: 185px;
+}
+.buttonContainer {
+  display: inline-flex;
+  gap: 10px;
+}
+.submitButton,
+.cancelButton {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  width: 160px;
+  border-radius: 12px;
+}
+.submitButton {
+  border: 1px solid #17a2b8;
+  background-color: #17a2b8;
+  color: white;
+}
+.cancelButton {
+  background-color: #fff;
+  border: 1px solid #f44336;
+  color: #f44336;
+}

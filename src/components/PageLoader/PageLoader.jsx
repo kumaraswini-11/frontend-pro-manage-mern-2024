@@ -1,4 +1,4 @@
-import { LuLoader2 } from "../../utils/IconExports.js";
+import { LuLoader2 } from "../../utils/iconExports.js";
 import styles from "./PageLoader.module.css";
 
 const PageLoader = () => (

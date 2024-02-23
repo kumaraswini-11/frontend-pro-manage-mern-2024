@@ -1,4 +1,4 @@
-import { FaCircle } from "../utils/IconExports.js";
+import { FaCircle } from "../utils/iconExports.js";
 import styles from "../styles/SharedTodoPage.module.css";
 
 function SharedTodoPage() {

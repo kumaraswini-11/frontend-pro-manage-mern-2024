@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectUserData } from "../../redux/slices/authenticationSlice";
-import { Section } from "../";
+import { IoIosArrowDown } from "../../utils/iconExports.js";
+import { DropdownContainer, Section } from "../";
+import useClickOutside from "../../hooks/useClickOutside.js";
 import styles from "./Dashboard.module.css";
 
+// Dummy Data
 const dummyTodos = [
   {
     _id: "1",
@@ -11,20 +14,20 @@ const dummyTodos = [
     priority: "High",
     dueDate: "2024-03-01",
     section: "Backlog",
-    checklists: [
+    todoItems: [
       {
         _id: "1",
-        checklistText: "Research project requirements",
+        todoText: "Research project requirements",
         isComplete: true,
       },
       {
         _id: "2",
-        checklistText: "Draft proposal outline",
+        todoText: "Draft proposal outline",
         isComplete: false,
       },
       {
         _id: "3",
-        checklistText: "Gather necessary resources",
+        todoText: "Gather necessary resources",
         isComplete: false,
       },
     ],
@@ -37,21 +40,21 @@ const dummyTodos = [
     priority: "Moderate",
     dueDate: "2024-02-28",
     section: "ToDo",
-    checklists: [
+    todoItems: [
       {
         _id: "4",
-        checklistText: "Create slide templates",
+        todoText: "Create slide templates",
         isComplete: true,
       },
       {
         _id: "5",
-        checklistText:
+        todoText:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis esse sapiente nesciunt labore id architecto, excepturi cumque illum sint laborum animi deserunt porro perferendis recusandae iure harum magnam eius eos.",
         isComplete: true,
       },
       {
         _id: "6",
-        checklistText: "Gather data and visuals",
+        todoText: "Gather data and visuals",
         isComplete: false,
       },
     ],
@@ -63,20 +66,20 @@ const dummyTodos = [
     priority: "Low",
     dueDate: "2024-02-28",
     section: "In Progress",
-    checklists: [
+    todoItems: [
       {
         _id: "7",
-        checklistText: "Create slide templates",
+        todoText: "Create slide templates",
         isComplete: true,
       },
       {
         _id: "8",
-        checklistText: "Outline presentation content",
+        todoText: "Outline presentation content",
         isComplete: true,
       },
       {
         _id: "9",
-        checklistText: "Gather data and visuals",
+        todoText: "Gather data and visuals",
         isComplete: false,
       },
     ],
@@ -88,20 +91,20 @@ const dummyTodos = [
     priority: "High",
     dueDate: "2024-02-28",
     section: "Done",
-    checklists: [
+    todoItems: [
       {
         _id: "10",
-        checklistText: "Create slide templates",
+        todoText: "Create slide templates",
         isComplete: true,
       },
       {
         _id: "11",
-        checklistText: "Outline presentation content",
+        todoText: "Outline presentation content",
         isComplete: true,
       },
       {
         _id: "12",
-        checklistText: "Gather data and visuals",
+        todoText: "Gather data and visuals",
         isComplete: false,
       },
     ],
@@ -113,20 +116,20 @@ const dummyTodos = [
     priority: "Moderate",
     dueDate: "2024-02-15",
     section: "Backlog",
-    checklists: [
+    todoItems: [
       {
         _id: "13",
-        checklistText: "Create slide templates",
+        todoText: "Create slide templates",
         isComplete: true,
       },
       {
         _id: "14",
-        checklistText: "Outline presentation content",
+        todoText: "Outline presentation content",
         isComplete: false,
       },
       {
         _id: "15",
-        checklistText: "Gather data and visuals",
+        todoText: "Gather data and visuals",
         isComplete: false,
       },
     ],
@@ -134,15 +137,23 @@ const dummyTodos = [
   },
 ];
 
-const options = ["week", "month", "year"];
+const menuOptions = [
+  { label: "Today", action: "today" },
+  { label: "This Week", action: "week" },
+  { label: "This Month", action: "month" },
+];
 const sections = ["Backlog", "ToDo", "In Progress", "Done"];
 
 const Dashboard = () => {
   const [todaysDate, setTodaysDate] = useState("");
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState(menuOptions[1]?.label);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [todos, setTodos] = useState(dummyTodos);
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const userData = useSelector(selectUserData);
+  const outsideTimeDropdownContainerRef = useClickOutside(() => {
+    setIsDropdownOpen(false);
+  });
 
   useEffect(() => {
     const currentDate = new Date();
@@ -154,64 +165,81 @@ const Dashboard = () => {
     setTodaysDate(formattedDate);
   }, []);
 
+  const handleSelectedOption = (action) => {
+    setSelectedOption(
+      menuOptions.find((option) => option.action === action)?.label
+    );
+    // API call based on selected value
+    console.log(action, "clicked");
+    setIsDropdownOpen(false);
+  };
+
   const toggleDropdown = (todoId) => {
     setOpenDropdownId((prevId) => (prevId === todoId ? null : todoId));
   };
 
-  const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
-
   const renderSections = () => {
-    // Initialize an object to store todos grouped by section
-    const todosBySection = Object.fromEntries(
-      sections.map((section) => [section, []])
-    );
-
-    // Group todos by section
-    todos.forEach((todo) => {
-      const sectionName = todo.section;
-      todosBySection[sectionName].push(todo);
+    const todosBySection = {};
+    sections.forEach((section) => {
+      todosBySection[section] = [];
     });
 
-    return (
-      <>
-        {/* Map over sections and render Section components */}
-        {sections.map((sectionName, index) => (
-          <Section
-            key={index}
-            title={sectionName}
-            plusIcon={sectionName === sections[1]}
-            todosBySection={todosBySection[sectionName]}
-            sections={sections}
-            openDropdownId={openDropdownId}
-            toggleDropdown={toggleDropdown}
-          />
-        ))}
-      </>
-    );
-  };
+    todos.forEach((todo) => {
+      todosBySection[todo.section].push(todo);
+    });
 
+    return sections.map((sectionName, index) => (
+      <Section
+        key={index}
+        title={sectionName}
+        plusIcon={sectionName === sections[1]}
+        todosBySection={todosBySection[sectionName]}
+        sections={sections}
+        openDropdownId={openDropdownId}
+        toggleDropdown={toggleDropdown}
+      />
+    ));
+  };
   return (
     <div className={styles.mainSubContainer}>
       <div className={styles.header}>
         <h2 className={styles.greetingText}>
-          Welcome! {userData?.userName ?? "Kumar"}
+          Welcome! {userData?.userName ?? "User"}
         </h2>
         <time dateTime={todaysDate}>{todaysDate}</time>
       </div>
       <section className={styles.content}>
         <div className={styles.heading}>
           <h3>Board</h3>
-          <select
-            className={styles.select}
-            value={selectedOption}
-            onChange={handleSelectChange}
-          >
-            {options.map((option, index) => (
-              <option key={index}>{`This ${option}`}</option>
-            ))}
-          </select>
+          <div className={styles.select} ref={outsideTimeDropdownContainerRef}>
+            {/* // For future reference: This is an example of how to use a custom dropdown menu
+            <select
+              className={styles.select}
+              value={selectedOption}
+              onChange={(e) => setSelectedOption(e.target.value)}
+            >
+              <option value="">Select an option</option>
+              {menuOptions.map((option, index) => (
+                <option key={index} value={option.action}>
+                  {option.label}
+                </option>
+              ))}
+            </select> */}
+
+            <label onClick={() => setIsDropdownOpen((prevState) => !prevState)}>
+              <span>{selectedOption}</span>
+              <span>
+                <IoIosArrowDown />
+              </span>
+            </label>
+            {isDropdownOpen && (
+              <DropdownContainer
+                options={menuOptions}
+                onSelect={handleSelectedOption}
+                isTimeDropdownToggle={true}
+              />
+            )}
+          </div>
         </div>
         <div className={styles.container}>{renderSections()}</div>
       </section>

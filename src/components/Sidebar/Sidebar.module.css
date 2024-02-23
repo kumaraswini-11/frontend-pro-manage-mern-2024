@@ -4,24 +4,28 @@
   font-size: 1rem;
   flex: 0 0 225px;
   background-color: #ffffff;
-  padding: 20px;
   border: 1px solid #edf5fe;
-
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  padding: 20px 0;
+}
+
+.aside > nav {
+  flex: 1;
 }
 
 .logo {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  justify-content: center;
 }
 
 .logo img {
   width: 20px;
   height: 20px;
   margin-right: 10px;
-  margin-left: 5px;
 }
 
 .logoText {
@@ -37,30 +41,38 @@
 }
 
 .navItem {
-  margin-bottom: 10px;
-  padding: 5px;
+  margin-bottom: 5px;
+  height: 40px;
 }
 
 .navItem:hover {
-  background-color: #edf5fe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navLink {
-  color: #000;
+  color: #707070;
   text-decoration: none;
   display: flex;
   align-items: center;
+  /* justify-content: center; */
+  height: 100%;
 }
 
 .icon {
   width: 20px;
   height: 20px;
-  margin-right: 10px;
   color: #707070;
+}
+
+.selected {
+  background-color: #edf5fe;
+  color: #000000;
 }
 
 .logout {
   margin-top: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .logoutLink {

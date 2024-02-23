@@ -1,0 +1,49 @@
+/* Modal background */
+.modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hidden class */
+.hidden {
+  display: none;
+}
+
+/* Modal content */
+.modalContent {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  background-color: white;
+  padding: 15px;
+  border-radius: 22px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  /* Allows the modal content to expand based on its content */
+  width: fit-content;
+  /* height: 596px; */
+}
+
+/* Modal header */
+.modalContent .modalHeader {
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Modal body */
+.modalContent .modalBody {
+  padding: 10px 0;
+}
+
+/* Modal footer */
+.modalContent .modalFooter {
+  padding: 10px 0;
+  text-align: right;
+}

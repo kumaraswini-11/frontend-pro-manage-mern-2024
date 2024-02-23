@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
-import { FaPlus, VscCollapseAll } from "../../utils/IconExports.js";
-import { Card } from "../";
+import { FaPlus, VscCollapseAll } from "../../utils/iconExports.js";
+import { Card, AddEditModal } from "../";
 import styles from "./Dashboard.module.css";
 
 const Section = React.memo(
@@ -13,25 +13,30 @@ const Section = React.memo(
     toggleDropdown,
   }) => {
     const [isAllCollapsed, setIsAllCollapsed] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleCollapseAll = useCallback(() => {
       setIsAllCollapsed((prevState) => !prevState);
     }, []);
 
+    const handleAddTodo = () => {
+      setIsOpen(true);
+    };
+
     return (
       <article className={`${styles.section} ${styles.scrollableSection}`}>
-        {/* Subsection */}
         <div className={styles.subsection}>
           <h4>{title}</h4>
           <div className={styles.iconContainer}>
-            {plusIcon && <FaPlus className={styles.icon} />}
+            {plusIcon && (
+              <FaPlus className={styles.icon} onClick={handleAddTodo} />
+            )}
             <VscCollapseAll
               className={styles.icon}
               onClick={handleCollapseAll}
             />
           </div>
         </div>
-        {/* Cards */}
         <div className={styles.cardsContainer}>
           {todosBySection?.map((todo) => (
             <Card
@@ -44,6 +49,11 @@ const Section = React.memo(
             />
           ))}
         </div>
+
+        {/* Add Modal */}
+        {plusIcon && isOpen && (
+          <AddEditModal isOpen={isOpen} setIsOpen={setIsOpen} />
+        )}
       </article>
     );
   }

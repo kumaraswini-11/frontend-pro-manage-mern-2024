@@ -1,5 +1,5 @@
 import React from "react";
-import { FaCircle } from "../utils/IconExports.js";
+import { FaCircle } from "../utils/iconExports.js";
 import { Sidebar } from "../components";
 import styles from "../styles/Analytics.module.css";
 

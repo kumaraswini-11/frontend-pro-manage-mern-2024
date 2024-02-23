@@ -11,6 +11,7 @@ import { FaPlus, FaCircle } from "react-icons/fa";
 import { VscCollapseAll } from "react-icons/vsc";
 import { PiDotsThreeBold } from "react-icons/pi";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { FaTrash } from "react-icons/fa";
 
 export {
   LuLoader2,
@@ -28,4 +29,5 @@ export {
   PiDotsThreeBold,
   IoIosArrowUp,
   IoIosArrowDown,
+  FaTrash,
 };

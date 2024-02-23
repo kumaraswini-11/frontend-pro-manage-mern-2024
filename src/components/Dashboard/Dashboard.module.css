@@ -18,7 +18,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  padding-right: 20px;
 }
 .header > time {
   font-weight: 500;
@@ -41,29 +42,70 @@
   align-items: center;
   margin-bottom: 20px;
   font-size: 1.5rem;
+  padding-right: 20px;
 }
 .heading h3 {
   font-weight: 500;
 }
 .select {
-  border: 1px solid #000000;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
   font-size: 1rem;
+  text-align: center;
+  /* border: 1px solid #000; */
+  border: none;
+  outline: none;
+  color: #000000;
+  position: relative;
+  cursor: pointer;
+  width: auto;
+  display: flex;
+  justify-content: right;
+}
+.select > label {
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 5px;
+  flex: 1;
+  cursor: pointer;
 }
 
 /* Container styles */
 .container {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   width: 100%;
   height: 90%;
   padding-bottom: 5px;
   flex: 1;
 
   /* Add horizontal scrollbar if content overflows horizontally */
-  scrollbar-gutter: stable;
-  overflow-x: auto;
-  scrollbar-width: thin;
+  scrollbar-width: auto;
   scrollbar-color: #8daab9 #d6eaf4;
+  overflow-x: auto;
+}
+.container::-webkit-scrollbar {
+  width: 10px;
+}
+.container::-webkit-scrollbar-track {
+  /* Track color */
+  background-color: #143d59;
+  /* Border radius of the track */
+  border-radius: 50px;
+}
+.container::-webkit-scrollbar-thumb {
+  /* Thumb color */
+  background-color: #8daab9;
+  /* Border radius of the thumb */
+  border-radius: 10px;
+  /* Border around the thumb */
+  border: 2px solid #d6eaf4;
+}
+.container::-webkit-scrollbar-thumb:hover {
+  /* Thumb color on hover */
+  background-color: #6c8898;
 }
 
 /* Section styles */
@@ -78,15 +120,15 @@
 }
 .scrollableSection {
   max-height: 100%;
-  scrollbar-gutter: stable;
+  /* scrollbar-gutter: stable; */
   overflow-y: auto;
   scrollbar-color: #8daab9 #d6eaf4;
-  scrollbar-width: thin;
+  /* scrollbar-width: thin; */
 }
 
 /* Subsection styles */
 .subsection {
-  margin-bottom: 20px;
+  /* margin-bottom: 5px; */
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -107,7 +149,7 @@
   background-color: white;
   padding: 15px;
   border-radius: 10px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 /* Icon container styles */
@@ -139,17 +181,6 @@
   color: #000000;
   width: 7px;
   height: 7px;
-}
-.lowPriority {
-  color: #63c05b;
-}
-
-.moderatePriority {
-  color: #18b0ff;
-}
-
-.highPriority {
-  color: #ff2473;
 }
 
 /* Priority text styles */
@@ -194,6 +225,7 @@
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
+
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
