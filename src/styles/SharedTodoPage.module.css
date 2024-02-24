@@ -1,116 +1,125 @@
-body {
+main {
   font-family: "Poppins", sans-serif;
-  /* font-family: "Inter", sans-serif;  */
-}
-
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
-}
-
-.main {
-  max-width: 800px;
-  /* max-height: 900px; */
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.task {
+  font-weight: 500;
   background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  padding: 50px 10px 50px;
-  /* height: 846px; */
-  max-height: 782px;
-  width: 654px;
-  top: 131px;
-  left: 457px;
+  color: #000000;
 }
 
-.taskHeader {
-  padding: 10px;
-  background-color: #fff;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+.header {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #000000;
+  height: auto;
+  overflow: hidden;
+  /* Prevent text from wrapping */
+  white-space: nowrap;
+  /* Show ellipsis if text overflows */
+  text-overflow: ellipsis;
+
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+.header img {
+  max-width: 24px;
 }
 
-.icon {
-  color: red;
-  width: 10px;
-  height: 10px;
+.container {
+  max-width: 655px;
+  max-height: 550px;
+  overflow: hidden;
+  margin: 2rem auto;
+  padding: 2.5rem 1.7rem;
+  border: 2px solid #edf5fe;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .priority {
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: #707070;
+}
+.priority .icon {
+  margin-right: 0.5rem;
+  width: 9px;
+  height: 9px;
+}
+.priority span {
+  font-size: 8px;
+  text-transform: uppercase;
 }
 
-.taskTitle {
-  padding: 10px;
-  font-size: 20px;
+.sectionTitle {
+  font-size: 22px;
+  color: #000000;
+  margin-bottom: 2rem;
 }
 
-.taskDetails {
-  padding: 30px 10px 0px;
-  width: 620px;
-  /* height: 322px; */
-  max-height: 782px;
-  display: flex; /* Use flexbox */
-  flex-direction: column; /* Stack items vertically */
-  /* gap: 20px; */
+.checklist {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
 }
-
-/* .taskItem:last-child {
-  margin-bottom: 0; /* Remove margin bottom from the last child 
-} */
-.taskListContainer {
-  /* only scroll vertically  */
-  scroll-behavior: auto;
-  overflow-y: auto; /* Enable vertical scrollbar */
-  height: 400px; /* Set a fixed height */
-  padding-right: 15px; /* Add space for the scrollbar */
-  margin-top: 18px;
-  /* flex: 1; */
+.checklist label {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 5px;
+  margin-bottom: 0.8rem;
 }
-
-.taskItem {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 11px;
-  margin-bottom: 18px;
+.checklist span {
+  font-size: 0.9rem;
 }
-
-.taskItem input[type="checkbox"] {
-  margin-right: 5px;
+.scrollableSection > div {
+  width: 10px;
+}
+.scrollableSection {
+  max-height: 300px;
+  overflow-y: auto;
+}
+/* Style the scrollbar */
+.scrollableSection::-webkit-scrollbar {
+  width: 12px; /* Set width of the scrollbar */
+}
+/* Track */
+.scrollableSection::-webkit-scrollbar-track {
+  background: #fff; /* Set track color */
+  border-radius: 10px; /* Set border radius */
+}
+/* Handle */
+.scrollableSection::-webkit-scrollbar-thumb {
+  background: #9cb7c5; /* Set thumb color */
+  border-radius: 10px; /* Set border radius */
+  border: 1px solid #9cb7c5;
+  /* transform: rotate(90deg); */
+}
+/* Handle on hover */
+.scrollableSection::-webkit-scrollbar-thumb:hover {
+  background: #7f9da7; /* Set thumb color on hover */
 }
 
 .dueDate {
-  margin-top: 10px;
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
 }
-
-.dueDateText {
+.dateBox {
+  margin-left: 10px;
 }
-
-.dueDateValue {
-  background-color: red;
-  border-radius: 3px;
-  padding: 5px;
+.dateBox {
+  border-radius: 8px;
+  padding: 5px 10px;
+  background-color: #cf3636;
   color: #fff;
 }
 
-/* Style scrollbar track */
-.taskListContainer::-webkit-scrollbar-track {
-  width: 10px; /* Width of the scrollbar */
-  background-color: #9cb7c5; /* Background color of the scrollbar track */
-}
-
-/* Style scrollbar thumb */
-.taskListContainer::-webkit-scrollbar-thumb {
-  width: 10px; /* Width of the scrollbar thumb */
-  background-color: #9cb7c5; /* Background color of the scrollbar thumb */
-  border: 1px solid #000; /* Border of the scrollbar thumb */
-  border-width: 1px 0 0 0; /* Border width of the scrollbar thumb */
-  transform: rotate(90deg); /* Rotate the scrollbar thumb 90 degrees */
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 90%;
+  }
 }

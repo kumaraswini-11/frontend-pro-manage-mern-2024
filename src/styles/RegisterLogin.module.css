@@ -1,12 +1,17 @@
-/* Container styles */
-.registerContainer {
+/* General styles */
+body {
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
   font-size: 1.2rem;
+  margin: 0;
+}
+
+/* Container styles */
+.registerContainer {
   display: flex;
   justify-content: center;
   margin: 8% auto;
-  width: 65%;
+  width: 60%;
   padding: 5px;
   min-height: 65vh;
 }
@@ -19,9 +24,13 @@
 }
 
 .subLeftSide {
-  position: relative;
-  top: 14%;
+  display: flex; /* Use flexbox */
+  flex-direction: column;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100%; /* Ensure it takes the full height of its parent */
   text-align: center;
+  margin-top: -10px;
 }
 
 .topImage {
@@ -36,6 +45,7 @@
   text-align: center;
   margin: 0;
 }
+
 .leftSide h2 {
   font-weight: 600;
   font-size: 2rem;
@@ -52,8 +62,17 @@
   padding: 10px;
   width: 80%;
   margin: 0 auto;
-  position: relative;
-  top: 10%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  /* margin-top: -10px; */
+}
+.subRightSide > form {
+  width: 100%;
 }
 
 .title {
@@ -68,7 +87,6 @@
 .inputContainerGroup {
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: 10px;
   gap: 10px;
 }
@@ -104,6 +122,7 @@
   padding: 8px 30px 8px 40px;
   width: 100%;
   color: #828282;
+  outline: none;
 }
 
 /* Button styles */
@@ -129,10 +148,10 @@
 
 /* Disabled button styles */
 .button[disabled] {
-  /* Reduce opacity for disabled buttons */
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 /* Hover effect for enabled buttons */
 .button:not([disabled]):hover {
   opacity: 0.9;
@@ -148,4 +167,11 @@
   color: #17a2b8;
   border: 1px solid #17a2b8;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.errorMsg {
+  text-align: left;
+  color: red;
+  font-size: 0.8rem;
+  margin-top: -9px;
 }

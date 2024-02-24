@@ -2,7 +2,7 @@ import { LuLoader2 } from "react-icons/lu";
 import { TiUserOutline } from "react-icons/ti";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLock2Line } from "react-icons/ri";
-import { PiEyeLight } from "react-icons/pi";
+import { PiEyeLight, PiEyeSlashLight } from "react-icons/pi";
 import { FiLayout } from "react-icons/fi";
 import { GoDatabase } from "react-icons/go";
 import { CiSettings } from "react-icons/ci";
@@ -19,6 +19,7 @@ export {
   AiOutlineMail,
   RiLock2Line,
   PiEyeLight,
+  PiEyeSlashLight,
   FiLayout,
   GoDatabase,
   CiSettings,

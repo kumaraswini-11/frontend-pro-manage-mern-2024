@@ -1,5 +1,6 @@
-import React from "react";
-import { FaTrash } from "../../../utils/iconExports.js";
+/* Custom Input field for dashboard, add and edit modals, and share page */
+
+import { FaTrash } from "../../utils/iconExports.js";
 import styles from "./CustomInput.module.css";
 
 // CustomInput component

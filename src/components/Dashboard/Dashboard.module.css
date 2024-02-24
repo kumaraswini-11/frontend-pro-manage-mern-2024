@@ -40,7 +40,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-size: 1.5rem;
   padding-right: 20px;
 }
@@ -77,53 +77,50 @@
   display: flex;
   gap: 15px;
   width: 100%;
-  height: 90%;
+  height: 91%;
   padding-bottom: 5px;
   flex: 1;
 
-  /* Add horizontal scrollbar if content overflows horizontally */
-  scrollbar-width: auto;
-  scrollbar-color: #8daab9 #d6eaf4;
+  /* Scroll effect */
   overflow-x: auto;
-}
-.container::-webkit-scrollbar {
-  width: 10px;
-}
-.container::-webkit-scrollbar-track {
-  /* Track color */
-  background-color: #143d59;
-  /* Border radius of the track */
-  border-radius: 50px;
-}
-.container::-webkit-scrollbar-thumb {
-  /* Thumb color */
-  background-color: #8daab9;
-  /* Border radius of the thumb */
-  border-radius: 10px;
-  /* Border around the thumb */
-  border: 2px solid #d6eaf4;
-}
-.container::-webkit-scrollbar-thumb:hover {
-  /* Thumb color on hover */
-  background-color: #6c8898;
 }
 
 /* Section styles */
 .section {
   font-weight: 500;
   flex: 1;
-  min-width: 27%;
+  min-width: 26%;
   background-color: #eef2f5;
   border-radius: 10px;
-  padding: 10px;
+  padding: 15px;
+  padding-right: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.scrollableSection {
+
+  /* Scroll effect*/
   max-height: 100%;
-  /* scrollbar-gutter: stable; */
   overflow-y: auto;
-  scrollbar-color: #8daab9 #d6eaf4;
-  /* scrollbar-width: thin; */
+  scrollbar-gutter: stable;
+}
+
+/* Style the scrollbar */
+.scrollableSection::-webkit-scrollbar {
+  /* Set width of the scrollbar */
+  width: 14px;
+}
+/* Track */
+.scrollableSection::-webkit-scrollbar-track {
+  background: #d6eaf4; /* Set track color */
+  border-radius: 14px; /* Set border radius */
+}
+/* Handle */
+.scrollableSection::-webkit-scrollbar-thumb {
+  background: #8daab9; /* Set thumb color */
+  border-radius: 14px; /* Set border radius */
+  border: 1px solid #9cb7c5;
+}
+/* Handle on hover */
+.scrollableSection::-webkit-scrollbar-thumb:hover {
+  background: #6c8898; /* Set thumb color on hover */
 }
 
 /* Subsection styles */
@@ -150,6 +147,7 @@
   padding: 15px;
   border-radius: 10px;
   margin-top: 10px;
+  overflow: hidden;
 }
 
 /* Icon container styles */

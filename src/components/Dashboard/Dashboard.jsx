@@ -211,7 +211,10 @@ const Dashboard = () => {
       <section className={styles.content}>
         <div className={styles.heading}>
           <h3>Board</h3>
-          <div className={styles.select} ref={outsideTimeDropdownContainerRef}>
+          <div
+            className={`${styles.select} ${styles.scrollableSection}`}
+            ref={outsideTimeDropdownContainerRef}
+          >
             {/* // For future reference: This is an example of how to use a custom dropdown menu
             <select
               className={styles.select}
@@ -228,9 +231,7 @@ const Dashboard = () => {
 
             <label onClick={() => setIsDropdownOpen((prevState) => !prevState)}>
               <span>{selectedOption}</span>
-              <span>
-                <IoIosArrowDown />
-              </span>
+              <IoIosArrowDown />
             </label>
             {isDropdownOpen && (
               <DropdownContainer
@@ -241,7 +242,9 @@ const Dashboard = () => {
             )}
           </div>
         </div>
-        <div className={styles.container}>{renderSections()}</div>
+        <div className={`${styles.container} ${styles.scrollableSection}`}>
+          {renderSections()}
+        </div>
       </section>
     </div>
   );
