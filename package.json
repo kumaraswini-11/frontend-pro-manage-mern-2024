@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "frontend-pro-manage-mern-2024",
   "private": true,
   "version": "1.0.0",
   "description": "A Project Task Manager app using React, Vite, and Redux Toolkit of production standards.",
