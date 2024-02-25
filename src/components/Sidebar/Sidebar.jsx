@@ -41,7 +41,9 @@ function Sidebar() {
           className={styles.logoutLink}
           onClick={() => setShowLogoutModal(true)}
         >
-          <IoLogOutOutline className={`${styles.icon} ${styles.logoutIcon}`} />
+          <span className={`${styles.icon} ${styles.logoutIcon}`}>
+            <IoLogOutOutline />
+          </span>
           <span className={styles.logoutText}>Log out</span>
         </Link>
       </div>

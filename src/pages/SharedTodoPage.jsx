@@ -144,10 +144,12 @@ function SharedTodoPage() {
               </div>
             </div>
 
-            <div className={styles.dueDate}>
-              <span>Due Date</span>
-              <span className={styles.dateBox}>{data.dueDate}</span>
-            </div>
+            {data?.dueDate !== "" && (
+              <div className={styles.dueDate}>
+                <span>Due Date</span>
+                <span className={styles.dateBox}>{data?.dueDate}</span>
+              </div>
+            )}
           </div>
         ) : (
           <div>This todo doesn't exist or the link is invalid.</div>

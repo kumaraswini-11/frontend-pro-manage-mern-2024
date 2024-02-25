@@ -122,7 +122,8 @@
   width: 185px;
 }
 .buttonContainer {
-  display: inline-flex;
+  display: flex;
+  overflow: hidden;
   gap: 10px;
 }
 .submitButton,

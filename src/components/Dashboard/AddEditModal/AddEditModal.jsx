@@ -1,48 +1,10 @@
-import React, { forwardRef, useRef, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { FaPlus, FaCircle } from "../../../utils/iconExports.js";
 import { Modal, CustomInput } from "../../index.js";
 import getPriorityIconColor from "../../../utils/getPriorityIconColor.js";
 import getDefaultFormData from "../../../utils/getDefaultFormData.js";
 import styles from "./AddEditModal.module.css";
-
-const dummyData = {
-  title: "",
-  priority: "",
-  dueDate: "",
-  todoItems: [
-    {
-      todoText: "Text1",
-      isComplete: true,
-    },
-    {
-      todoText: "Text2",
-      isComplete: false,
-    },
-  ],
-};
-
-const CustomDatePicker = ({ selectedDate, handleDateChange }) => {
-  return (
-    <DatePicker
-      selected={selectedDate}
-      onChange={handleDateChange}
-      popperPlacement="bottom-start"
-      popperModifiers={{
-        offset: {
-          enabled: true,
-          offset: "5px, 10px", // Adjust as needed
-        },
-        preventOverflow: {
-          enabled: true,
-          escapeWithReference: false,
-          boundariesElement: "viewport",
-        },
-      }}
-    />
-  );
-};
 
 const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
   const [formData, setFormData] = useState(editTodo ?? getDefaultFormData());
@@ -77,18 +39,39 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
     setFormData({ ...formData, todoItems: filteredTodos });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Perform API call here with formData
-    console.log("Form data: ", formData);
-    // setIsOpen(false);
-  };
-
   const handleAddNewTodo = () => {
     setFormData((prevData) => ({
       ...prevData,
       todoItems: [...prevData.todoItems, { todoText: "", isComplete: false }],
     }));
+  };
+
+  const validateFormData = () => {
+    if (!formData.title) {
+      toast.error("Title is required");
+      return false;
+    }
+    if (!formData.priority) {
+      toast.error("Priority is required");
+      return false;
+    }
+    if (
+      formData.todoItems.length === 0 ||
+      !formData.todoItems.some((item) => item.todoText.trim())
+    ) {
+      toast.error("At least one checklist item is required");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateFormData()) {
+      // Perform API call here with formData
+      console.log("Form data: ", formData);
+      setIsOpen(false);
+    }
   };
 
   return (
@@ -185,6 +168,37 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
           >
             {selectedDate ? selectedDate.toDateString() : "Select Due Date"}
           </button>
+
+          {isDatePickerOpen && (
+            <div
+              style={
+                {
+                  // position: "fixed",
+                  // width: "inherit",
+                  // top: "35%",
+                  // left: "50%",
+                  // display: "flex",
+                  // justifyContent: "center",
+                }
+              }
+            >
+              <input
+                type="date"
+                id="date-picker"
+                name="dueDate"
+                // Set value to ISO string of selected date
+                value={selectedDate?.toISOString()?.substr(0, 10)}
+                onChange={(e) => {
+                  const date = new Date(e.target.value);
+                  setSelectedDate(date);
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    dueDate: date,
+                  }));
+                }}
+              />
+            </div>
+          )}
         </div>
         <div className={styles.buttonContainer}>
           <button
@@ -201,15 +215,6 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
           </button>
         </div>
       </div>
-
-      {isDatePickerOpen && (
-        <CustomDatePicker
-          selectedDate={selectedDate}
-          handleDateChange={() => {
-            setSelectedDate(date);
-          }}
-        />
-      )}
     </Modal>
   );
 };
