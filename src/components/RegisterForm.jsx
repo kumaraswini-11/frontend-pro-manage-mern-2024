@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   TiUserOutline,
   AiOutlineMail,
@@ -8,11 +9,12 @@ import {
   PiEyeSlashLight,
 } from "../utils/iconExports.js";
 import { InputField } from "./";
+import { useRegisterMutation } from "../redux/api/authenticationApi.js";
 import styles from "../styles/RegisterLogin.module.css";
 
 function RegisterForm() {
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -21,11 +23,12 @@ function RegisterForm() {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const [register, { isLoading }] = useRegisterMutation();
 
   const validateForm = () => {
     let validationErrors = {};
-    if (!formData.name.trim()) {
-      validationErrors.name = "Name is required";
+    if (!formData.fullName.trim()) {
+      validationErrors.fullName = "Name is required";
     }
     if (!formData.email.trim()) {
       validationErrors.email = "Email is required";
@@ -57,20 +60,26 @@ function RegisterForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted:", formData);
-      // Reset form fields
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-      // Clear any previous errors
-      setErrors({});
+      try {
+        const { confirmPassword, ...formDataWithoutConfirmPassword } = formData;
+        const res = await register(formDataWithoutConfirmPassword);
+        console.log(res);
+        if (res.error && res.error.data && res.error.data.message) {
+          toast.error(res.error.data.message);
+        } else if (res.data.success) {
+          toast.success(res.data.message);
+          navigate("/login");
+        } else {
+          toast.error(res.data.message);
+        }
+      } catch (error) {
+        // console.error("Registration failed:", error);
+        toast.error("Registration failed. Please try again later.");
+      }
     } else {
       setErrors(validationErrors);
     }
@@ -92,13 +101,15 @@ function RegisterForm() {
         <div className={styles.inputContainerGroup}>
           <InputField
             type="text"
-            name="name"
+            name="fullName"
             leftIcon={<TiUserOutline />}
             placeholder="Name"
-            value={formData.name}
+            value={formData.fullName}
             onChange={handleChange}
           />
-          {errors.name && <p className={styles.errorMsg}>{errors.name}</p>}
+          {errors.fullName && (
+            <p className={styles.errorMsg}>{errors.fullName}</p>
+          )}
           <InputField
             type="email"
             name="email"
@@ -147,21 +158,20 @@ function RegisterForm() {
         </div>
 
         <div className={styles.buttonContainer}>
-          {/* onclick submit data */}
           <button
             type="submit"
             className={`${styles.button} ${styles.primary}`}
+            disabled={isLoading}
           >
-            Register
+            {isLoading ? "Registering..." : "Register"}
           </button>
           <p>Have an account?</p>
-          {/* onclick clear data */}
           <button
             type="button"
             className={`${styles.button} ${styles.secondary}`}
             onClick={() => {
               setFormData({
-                name: "",
+                fullName: "",
                 email: "",
                 password: "",
                 confirmPassword: "",

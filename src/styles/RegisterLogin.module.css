@@ -175,3 +175,14 @@ body {
   font-size: 0.8rem;
   margin-top: -9px;
 }
+
+/* Disabled button styles */
+.button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Hover effect for enabled buttons */
+.button:not([disabled]):hover {
+  opacity: 0.9;
+}

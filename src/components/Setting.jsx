@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import {
   TiUserOutline,
   RiLock2Line,
@@ -7,25 +8,39 @@ import {
   PiEyeSlashLight,
 } from "../utils/iconExports.js";
 import { InputField } from "./";
+import {
+  setCredentials,
+  selectUserData,
+} from "../redux/slices/authenticationSlice.js";
+import { useChangePasswordMutation } from "../redux/api/authenticationApi.js";
 import styles from "../styles/SettingPage.module.css";
 
 function Setting() {
+  const dispatch = useDispatch();
+  const userData = useSelector(selectUserData);
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: userData?.fullName || "",
     oldPassword: "",
     newPassword: "",
   });
   const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
+
+  useEffect(() => {
+    setFormData(() => ({
+      fullName: userData?.fullName || "",
+      oldPassword: "",
+      newPassword: "",
+    }));
+  }, [userData]);
 
   const validateForm = () => {
     let validationErrors = {};
-    if (!formData.name.trim()) {
-      validationErrors.name = "Name is required";
+    if (!formData.fullName.trim()) {
+      validationErrors.fullName = "Name is required";
     }
-
     if (!formData.oldPassword.trim()) {
       validationErrors.oldPassword = "Old Password is required";
     } else if (formData.oldPassword.length < 6) {
@@ -40,71 +55,77 @@ function Setting() {
     }
     return validationErrors;
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-
-    // Clear any previous error for the field
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted:", formData);
-      // Reset form fields
-      setFormData({
-        ...formData,
-        oldPassword: "",
-        newPassword: "",
-      });
-      // Clear any previous errors
-      setErrors({});
+      try {
+        const res = await changePassword(formData);
+        if (res.error || !res.data?.success) {
+          const errorMessage = res.error?.data?.message || "Updation failed.";
+          toast.error(errorMessage);
+        } else {
+          dispatch(setCredentials(res.data.user));
+          toast.success(res.data.message || "Password updated successfully.");
+        }
+      } catch (error) {
+        // console.error("Updation failed:", error);
+        toast.error("Updation failed. Please try again later.");
+      }
     } else {
       setErrors(validationErrors);
     }
   };
 
-  const toggleOldPasswordVisibility = () => {
-    setOldPasswordVisible((prev) => !prev);
-  };
-
-  const toggleNewPasswordVisibility = () => {
-    setNewPasswordVisible((prev) => !prev);
+  const togglePasswordVisibility = (type) => {
+    if (type === "old") {
+      setOldPasswordVisible((prev) => !prev);
+    } else if (type === "new") {
+      setNewPasswordVisible((prev) => !prev);
+    }
   };
 
   return (
     <div className={styles.mainSubContainer}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete="off">
         <h2 className={styles.title}>Settings</h2>
-
         <div className={styles.inputContainerGroup}>
           <InputField
             type="text"
-            name="name"
+            name="fullName"
             leftIcon={<TiUserOutline />}
             placeholder="Name"
-            value={formData.name}
+            value={formData.fullName}
             onChange={handleChange}
             isSettingsPage={true}
           />
-          {errors.name && <p className={styles.errorMsg}>{errors.name}</p>}
+          {errors.fullName && (
+            <p className={styles.errorMsg}>{errors.fullName}</p>
+          )}
           <InputField
             type={oldPasswordVisible ? "text" : "password"}
             name="oldPassword"
             leftIcon={<RiLock2Line />}
             rightIcon={
               oldPasswordVisible ? (
-                <PiEyeLight onClick={toggleOldPasswordVisibility} />
+                <PiEyeLight onClick={() => togglePasswordVisibility("old")} />
               ) : (
-                <PiEyeSlashLight onClick={toggleOldPasswordVisibility} />
+                <PiEyeSlashLight
+                  onClick={() => togglePasswordVisibility("old")}
+                />
               )
             }
             placeholder="Old Password"
@@ -121,9 +142,11 @@ function Setting() {
             leftIcon={<RiLock2Line />}
             rightIcon={
               newPasswordVisible ? (
-                <PiEyeLight onClick={toggleNewPasswordVisibility} />
+                <PiEyeLight onClick={() => togglePasswordVisibility("new")} />
               ) : (
-                <PiEyeSlashLight onClick={toggleNewPasswordVisibility} />
+                <PiEyeSlashLight
+                  onClick={() => togglePasswordVisibility("new")}
+                />
               )
             }
             placeholder="New Password"
@@ -134,12 +157,12 @@ function Setting() {
           {errors.newPassword && (
             <p className={styles.errorMsg}>{errors.newPassword}</p>
           )}
-
           <button
             type="submit"
             className={`${styles.button} ${styles.primary}`}
+            disabled={isLoading}
           >
-            Update
+            {isLoading ? "Updating..." : "Update"}
           </button>
         </div>
       </form>

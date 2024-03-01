@@ -1,20 +1,9 @@
-import React from "react";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../redux/slices/authenticationSlice.js";
 import { FaCircle } from "../utils/iconExports.js";
 import { Sidebar } from "../components";
+import { useFetchAnalyticsQuery } from "../redux/api/todoApi.js";
 import styles from "../styles/Analytics.module.css";
-
-const leftSectionData = [
-  { name: "Backlog Tasks", count: 16 },
-  { name: "To-do Tasks", count: 14 },
-  { name: "In-Progress Tasks", count: 3 },
-  { name: "Completed Tasks", count: 22 },
-];
-const rightSectionData = [
-  { name: "Low Priority", count: 16 },
-  { name: "Moderate Priority", count: 14 },
-  { name: "High Priority", count: 3 },
-  { name: "Due Date Tasks", count: 3 },
-];
 
 function PriorityItem({ name, count }) {
   return (
@@ -23,6 +12,7 @@ function PriorityItem({ name, count }) {
         <FaCircle className={styles.dotIcon} />
       </span>
       <span className={styles.priorityText}>{name}</span>
+
       <span className={styles.priorityCount}>
         {String(count).padStart(2, "0")}
       </span>
@@ -31,6 +21,47 @@ function PriorityItem({ name, count }) {
 }
 
 function AnalyticsPage() {
+  const userData = useSelector(selectUserData);
+  // Fetch analytics data using the useFetchAnalyticsQuery hook
+  const {
+    data: analyticsData,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useFetchAnalyticsQuery(userData._id);
+
+  // Define left section data
+  const leftSectionData = [
+    { name: "Backlog Tasks", count: analyticsData?.data?.backlogCount || 0 },
+    { name: "To-do Tasks", count: analyticsData?.data?.todoCount || 0 },
+    {
+      name: "In-Progress Tasks",
+      count: analyticsData?.data?.progressCount || 0,
+    },
+    {
+      name: "Completed Tasks",
+      count: analyticsData?.data?.completedCount || 0,
+    },
+  ];
+
+  // Define right section data
+  const rightSectionData = [
+    { name: "Low Priority", count: analyticsData?.data?.lowPriorityCount || 0 },
+    {
+      name: "Moderate Priority",
+      count: analyticsData?.data?.moderatePriorityCount || 0,
+    },
+    {
+      name: "High Priority",
+      count: analyticsData?.data?.highPriorityCount || 0,
+    },
+    {
+      name: "Due Date Tasks",
+      count: analyticsData?.data?.tasksWithDueDateCount || 0,
+    },
+  ];
+
   return (
     <div className="container">
       {/* Sidebar */}
@@ -38,23 +69,46 @@ function AnalyticsPage() {
 
       {/* Main content */}
       <main className="mainContent">
-        <h2 className={styles.title}>Analytics</h2>
+        {isLoading ? (
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+            }}
+          >
+            Loading...
+          </p>
+        ) : (
+          <>
+            <h2 className={styles.title}>Analytics</h2>
 
-        <div className={styles.subContainer}>
-          {/* Left Section */}
-          <div className={styles.section}>
-            {leftSectionData.map((task, index) => (
-              <PriorityItem key={index} name={task.name} count={task.count} />
-            ))}
-          </div>
+            <div className={styles.subContainer}>
+              {/* Left Section */}
+              <div className={styles.section}>
+                {leftSectionData.map((task) => (
+                  <PriorityItem
+                    key={task.name}
+                    name={task.name}
+                    count={task.count}
+                  />
+                ))}
+              </div>
 
-          {/* Right Section */}
-          <div className={styles.section}>
-            {rightSectionData.map((task, index) => (
-              <PriorityItem key={index} name={task.name} count={task.count} />
-            ))}
-          </div>
-        </div>
+              {/* Right Section */}
+              <div className={styles.section}>
+                {rightSectionData.map((task) => (
+                  <PriorityItem
+                    key={task.name}
+                    name={task.name}
+                    count={task.count}
+                  />
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </main>
     </div>
   );

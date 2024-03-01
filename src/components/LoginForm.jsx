@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import {
   AiOutlineMail,
   RiLock2Line,
@@ -7,6 +9,8 @@ import {
   PiEyeSlashLight,
 } from "../utils/iconExports.js";
 import { InputField } from "./";
+import { setCredentials } from "../redux/slices/authenticationSlice.js";
+import { useLoginMutation } from "../redux/api/authenticationApi.js";
 import styles from "../styles/RegisterLogin.module.css";
 
 function LoginForm() {
@@ -16,7 +20,11 @@ function LoginForm() {
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // Hooks for navigation, dispatch
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
 
   const validateForm = () => {
     let validationErrors = {};
@@ -49,18 +57,27 @@ function LoginForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted:", formData);
-      // Reset form fields
-      setFormData({
-        email: "",
-        password: "",
-      });
-      // Clear any previous errors
-      setErrors({});
+      try {
+        const res = await login(formData);
+        // console.log(res);
+
+        if (res.error && res.error.data && res.error.data.message) {
+          toast.error(res.error.data.message);
+        } else if (res.data.success) {
+          dispatch(setCredentials(res.data.user));
+          toast.success(res.data.message);
+          navigate("/dashboard");
+        } else {
+          toast.error(res.data.message);
+        }
+      } catch (error) {
+        // console.error("Login failed:", error);
+        toast.error("Login failed. Please try again later.");
+      }
     } else {
       setErrors(validationErrors);
     }
@@ -111,8 +128,9 @@ function LoginForm() {
           <button
             type="submit"
             className={`${styles.button} ${styles.primary}`}
+            disabled={isLoading}
           >
-            Log in
+            {isLoading ? "Login..." : "Log in"}
           </button>
           <p>Don't have an account yet?</p>
           {/* onClick clear data */}

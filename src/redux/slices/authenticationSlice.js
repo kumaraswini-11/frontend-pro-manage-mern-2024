@@ -1,35 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { isAuthenticated: false, userData: null };
+const initialState = { isAuthenticated: false, user: null };
 
-const authSlice = createSlice({
-  name: "auth", // Slice name
+const authenticationSlice = createSlice({
+  name: "authentication",
   initialState,
-
-  // Reducers define how the state should change in response to actions
   reducers: {
-    // Reducer for successful login action
-    loginSuccess: (state, action) => {
+    setCredentials: (state, action) => {
+      // Update state immutably
       state.isAuthenticated = true;
-      state.userData = action.payload;
+      state.user = action.payload;
     },
 
-    // Reducer for successful logout action
-    logoutSuccess: (state) => {
+    logOut: (state) => {
+      // Update state immutably
       state.isAuthenticated = false;
-      state.userData = null;
+      state.user = null;
     },
   },
 });
 
-export const { loginSuccess, logoutSuccess } = authSlice.actions;
-export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
-export const selectUserData = (state) => state.auth.userData;
+export const { setCredentials, logOut } = authenticationSlice.actions;
+export const selectIsAuthenticated = (state) =>
+  state.authentication.isAuthenticated;
+export const selectUserData = (state) => state.authentication.user;
 
-export default authSlice.reducer;
-
-/*
-Two ways of using them in the component
-With variable export like we did above - const userData = useSelector(selectUserData);
-without variabel export - const userData = useSelector((state) => state.auth.userData);
-*/
+export default authenticationSlice.reducer;

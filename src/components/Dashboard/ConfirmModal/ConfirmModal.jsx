@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { Modal } from "../..";
+import { logOut } from "../../../redux/slices/authenticationSlice";
+import { useLogoutMutation } from "../../../redux/api/authenticationApi";
 import styles from "./ConfirmModal.module.css";
 
 const ConfirmModal = ({
@@ -13,18 +15,24 @@ const ConfirmModal = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [logout, { isLoading }] = useLogoutMutation();
 
   const handleLogout = async () => {
-    // Implement logout functionality
     try {
-      // Example: const response = await logout();
-      // if (response.data.success) {
-      //   dispatch(logoutSuccess());
-      toast.success("Logged out successfully.");
-      navigate("/login");
-      // }
+      const res = await logout();
+      // console.log(res);
+
+      if (res.error && res.error.data && res.error.data.message) {
+        toast.error(res.error.data.message);
+      } else if (res.data.success) {
+        // setShowLogoutModal(false);
+        toast.success(res.data.message);
+        dispatch(logOut());
+        navigate("/login");
+      }
     } catch (error) {
-      console.error("Logout error:", error.message);
+      // console.error("Logout failed:", error);
+      toast.error("Logout failed. Please try again later.");
     }
   };
 

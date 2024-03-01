@@ -15,6 +15,7 @@ import {
   ConfirmModal,
 } from "../";
 import useClickOutside from "../../hooks/useClickOutside.js";
+import truncateTitle from "../../utils/truncateTitle.js";
 import styles from "./Dashboard.module.css";
 
 const menuOptions = [
@@ -116,7 +117,9 @@ const Card = forwardRef(
           </div>
         </div>
 
-        <h4 className={styles.heroTitle}>{todo.title}</h4>
+        <h4 className={styles.heroTitle} title={todo.title}>
+          {truncateTitle(todo.title, 40)}
+        </h4>
 
         <div className={styles.checklistSubsection}>
           <div className={styles.checklist}>

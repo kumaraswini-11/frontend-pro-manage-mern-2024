@@ -4,12 +4,20 @@ import { FaPlus, FaCircle } from "../../../utils/iconExports.js";
 import { Modal, CustomInput } from "../../index.js";
 import getPriorityIconColor from "../../../utils/getPriorityIconColor.js";
 import getDefaultFormData from "../../../utils/getDefaultFormData.js";
+import {
+  useAddTodoMutation,
+  useEditTodoMutation,
+} from "../../../redux/api/todoApi.js";
 import styles from "./AddEditModal.module.css";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
+  const [startDate, setStartDate] = useState(new Date());
+  const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
+
   const [formData, setFormData] = useState(editTodo ?? getDefaultFormData());
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const handleTitleChange = (e) => {
     const { name, value } = e.target;
@@ -65,12 +73,30 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const [addTodo, { isLoading: addTodoLoading }] = useAddTodoMutation();
+  const [editExistingTodo, { isLoading: editTodoLoading }] =
+    useEditTodoMutation();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateFormData()) {
-      // Perform API call here with formData
-      console.log("Form data: ", formData);
-      setIsOpen(false);
+      try {
+        let res;
+        if (!editTodo) {
+          res = await addTodo(formData).unwrap();
+        } else {
+          res = await editExistingTodo(formData).unwrap();
+        }
+
+        if (res.success) {
+          toast.success(res.message);
+          setIsOpen(false);
+        } else {
+          toast.error(res.message);
+        }
+      } catch (error) {
+        toast.error("Operation failed. Please try again.");
+      }
     }
   };
 
@@ -160,45 +186,30 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
       {/* Footer */}
       <div className={styles.footer}>
         <div className={styles.formFieldDueDate}>
+          {datePickerIsOpen && (
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => {
+                setStartDate(date);
+                formData.dueDate = date;
+                // Close DatePicker after selecting a date
+                setDatePickerIsOpen(false);
+                // console.log(startDate);
+              }}
+              // Close DatePicker when clicking outside
+              onClickOutside={() => setDatePickerIsOpen(false)}
+              inline
+            />
+          )}
+
           <button
             className={`${styles.dueDateButton} ${styles.button}`}
             onClick={() => {
-              setIsDatePickerOpen((prev) => !prev);
+              setDatePickerIsOpen((prevIsOpen) => !prevIsOpen);
             }}
           >
-            {selectedDate ? selectedDate.toDateString() : "Select Due Date"}
+            {startDate ? startDate.toDateString() : "Select Due Date"}
           </button>
-
-          {isDatePickerOpen && (
-            <div
-              style={
-                {
-                  // position: "fixed",
-                  // width: "inherit",
-                  // top: "35%",
-                  // left: "50%",
-                  // display: "flex",
-                  // justifyContent: "center",
-                }
-              }
-            >
-              <input
-                type="date"
-                id="date-picker"
-                name="dueDate"
-                // Set value to ISO string of selected date
-                value={selectedDate?.toISOString()?.substr(0, 10)}
-                onChange={(e) => {
-                  const date = new Date(e.target.value);
-                  setSelectedDate(date);
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    dueDate: date,
-                  }));
-                }}
-              />
-            </div>
-          )}
         </div>
         <div className={styles.buttonContainer}>
           <button
@@ -210,8 +221,9 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
           <button
             onClick={handleSubmit}
             className={`${styles.submitButton} ${styles.button}`}
+            disabled={addTodoLoading || editTodoLoading}
           >
-            Save
+            {editTodoLoading ? "Saving..." : "Save"}
           </button>
         </div>
       </div>
