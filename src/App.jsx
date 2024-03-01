@@ -8,7 +8,7 @@ import { selectIsAuthenticated } from "./redux/slices/authenticationSlice";
 
 function App() {
   const navigate = useNavigate();
-  const isAlreadyLoggedIn = true; // useSelector(selectIsAuthenticated);
+  const isAlreadyLoggedIn = useSelector(selectIsAuthenticated);
 
   useEffect(() => {
     if (!isAlreadyLoggedIn) {

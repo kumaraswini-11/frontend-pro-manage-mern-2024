@@ -8,6 +8,7 @@ import {
 } from "../../utils/iconExports.js";
 import getPriorityIconColor from "../../utils/getPriorityIconColor.js";
 import getTodoItemOptionsStyle from "../../utils/getTodoItemOptionsStyle.js";
+import { getFormattedDate } from "../../utils/getFormatedDate.js";
 import {
   DropdownContainer,
   CustomInput,
@@ -16,6 +17,10 @@ import {
 } from "../";
 import useClickOutside from "../../hooks/useClickOutside.js";
 import truncateTitle from "../../utils/truncateTitle.js";
+import {
+  useUpdateSectionMutation,
+  useUpdateCheckboxMutation,
+} from "../../redux/api/todoApi.js";
 import styles from "./Dashboard.module.css";
 
 const menuOptions = [
@@ -34,6 +39,10 @@ const Card = forwardRef(
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [toggleDropdownState, setToggleDropdownState] = useState(false);
+
+    const [updateCheckbox, { isLoading: upadteCheckBoxLoading }] =
+      useUpdateCheckboxMutation();
+    const [updateSection, { isLoading }] = useUpdateSectionMutation();
 
     useEffect(() => {
       setIsChecklistOpen(false);
@@ -78,12 +87,26 @@ const Card = forwardRef(
       setIsChecklistOpen((prevState) => !prevState);
     };
 
-    const handleCheckboxChange = (checklistId) => {
+    const handleCheckboxChange = async (
+      checklistId,
+      todoItemId,
+      isComplete
+    ) => {
       setChecklistState((prevState) => {
         return prevState.map((checked, index) =>
           index === checklistId ? !checked : checked
         );
       });
+
+      // api call to updateCheckbox
+      const { data } = await updateCheckbox({
+        todoItemId,
+        isComplete,
+      });
+    };
+
+    const handelSectionUpdate = async (todoId, section) => {
+      const res = await updateSection({ todoId, section });
     };
 
     return (
@@ -148,7 +171,15 @@ const Card = forwardRef(
                 key={todoItem._id}
                 value={todoItem.todoText}
                 checked={checklistState[index]}
-                onCheckboxChange={() => handleCheckboxChange(index)}
+                onCheckboxChange={() =>
+                  handleCheckboxChange(
+                    index,
+                    todoItem._id,
+                    !todoItem.isComplete
+                  )
+                }
+                // onDelete={() => {}}
+                isReadOnly={true}
               />
             ))}
           </div>
@@ -156,12 +187,16 @@ const Card = forwardRef(
 
         <div className={styles.optionsSubsection}>
           <div className={styles.date} style={getTodoItemOptionsStyle(todo)}>
-            {todo.dueDate}
+            {getFormattedDate("2", todo.dueDate)}
           </div>
           <div className={styles.subOptions}>
             {sections?.map((section) =>
               section !== todo.section ? (
-                <div className={styles.option} key={section}>
+                <div
+                  className={styles.option}
+                  key={section}
+                  onClick={() => handelSectionUpdate(todo._id, section)}
+                >
                   {section.toLowerCase() === "todo"
                     ? "TO-DO"
                     : section.toLowerCase() === "in progress"

@@ -19,6 +19,8 @@ const CustomInput = ({
   onTextInputChange,
   isDelete = false,
   onDelete = () => {},
+  isReadOnly = false,
+  // ...props
 }) => {
   return (
     <div className={styles.customInputContainer}>
@@ -30,13 +32,18 @@ const CustomInput = ({
           checked={checked}
           onChange={onCheckboxChange}
           className={styles.checkboxInput}
+          // {...(isReadOnly && props)}
+          readOnly={isReadOnly}
         />
         {/* Text input */}
         <input
           type="text"
+          // defaultValue={value}
           value={value}
           onChange={onTextInputChange}
           className={styles.textInput}
+          // {...(isReadOnly && props)}
+          readOnly={isReadOnly}
         />
       </div>
       {/* Delete icon (optional) */}

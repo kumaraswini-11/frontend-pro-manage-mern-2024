@@ -21,7 +21,7 @@ const route = createBrowserRouter([
   // Unprotected route
   { path: "/", element: <Register /> },
   { path: "/login", element: <Login /> },
-  { path: "/shared-todo/:sharedId", element: <SharedTodo /> },
+  { path: "/shared-todo/:uniqueLinkId", element: <SharedTodo /> },
 
   // Protected routes
   {

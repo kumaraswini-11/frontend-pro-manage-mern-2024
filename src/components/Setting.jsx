@@ -82,7 +82,7 @@ function Setting() {
           toast.success(res.data.message || "Password updated successfully.");
         }
       } catch (error) {
-        // console.error("Updation failed:", error);
+        // Handle the error without logging it to the console
         toast.error("Updation failed. Please try again later.");
       }
     } else {

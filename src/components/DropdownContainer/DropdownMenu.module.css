@@ -13,12 +13,12 @@
   overflow: hidden;
   /* Position absolutely relative to the parent */
   position: absolute;
-  z-index: 100;
-  width: 151px;
-  min-height: 120px;
+  z-index: 100000;
+  width: 150px;
+  min-height: 95px;
   text-align: left;
   /* Position below the parent */
-  top: 100%;
+  top: 65%;
   /* Align with the parent's right edge */
   right: 0;
   /* transform: translateX(-90%); */
@@ -30,7 +30,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 7px;
 }
 
 .dropdownMenu ul li {

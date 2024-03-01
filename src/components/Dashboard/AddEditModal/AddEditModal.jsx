@@ -6,7 +6,7 @@ import getPriorityIconColor from "../../../utils/getPriorityIconColor.js";
 import getDefaultFormData from "../../../utils/getDefaultFormData.js";
 import {
   useAddTodoMutation,
-  useEditTodoMutation,
+  useEditExistingTodoMutation,
 } from "../../../redux/api/todoApi.js";
 import styles from "./AddEditModal.module.css";
 
@@ -14,9 +14,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState();
   const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
-
   const [formData, setFormData] = useState(editTodo ?? getDefaultFormData());
 
   const handleTitleChange = (e) => {
@@ -75,11 +74,12 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
 
   const [addTodo, { isLoading: addTodoLoading }] = useAddTodoMutation();
   const [editExistingTodo, { isLoading: editTodoLoading }] =
-    useEditTodoMutation();
+    useEditExistingTodoMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateFormData()) {
+      // console.log(formData);
       try {
         let res;
         if (!editTodo) {
@@ -88,11 +88,11 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
           res = await editExistingTodo(formData).unwrap();
         }
 
-        if (res.success) {
+        if (res?.success) {
           toast.success(res.message);
           setIsOpen(false);
         } else {
-          toast.error(res.message);
+          toast.error(res?.error.data.message);
         }
       } catch (error) {
         toast.error("Operation failed. Please try again.");
@@ -173,6 +173,7 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
                   }
                   isDelete={true}
                   onDelete={() => handelDeleteTodoItem(index)}
+                  isReadOnly={false}
                 />
               ))}
             </div>
@@ -223,7 +224,7 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
             className={`${styles.submitButton} ${styles.button}`}
             disabled={addTodoLoading || editTodoLoading}
           >
-            {editTodoLoading ? "Saving..." : "Save"}
+            {editTodoLoading || addTodoLoading ? "Saving..." : "Save"}
           </button>
         </div>
       </div>

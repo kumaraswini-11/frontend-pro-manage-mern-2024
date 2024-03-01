@@ -30,35 +30,45 @@ function AnalyticsPage() {
     isError,
     error,
   } = useFetchAnalyticsQuery(userData._id);
+  // console.log(analyticsData);
 
   // Define left section data
   const leftSectionData = [
-    { name: "Backlog Tasks", count: analyticsData?.data?.backlogCount || 0 },
-    { name: "To-do Tasks", count: analyticsData?.data?.todoCount || 0 },
+    {
+      name: "Backlog Tasks",
+      count: analyticsData?.analyticsData?.backlogCount || 0,
+    },
+    {
+      name: "To-do Tasks",
+      count: analyticsData?.analyticsData?.todoCount || 0,
+    },
     {
       name: "In-Progress Tasks",
-      count: analyticsData?.data?.progressCount || 0,
+      count: analyticsData?.analyticsData?.progressCount || 0,
     },
     {
       name: "Completed Tasks",
-      count: analyticsData?.data?.completedCount || 0,
+      count: analyticsData?.analyticsData?.completedCount || 0,
     },
   ];
 
   // Define right section data
   const rightSectionData = [
-    { name: "Low Priority", count: analyticsData?.data?.lowPriorityCount || 0 },
+    {
+      name: "Low Priority",
+      count: analyticsData?.analyticsData?.lowPriorityCount || 0,
+    },
     {
       name: "Moderate Priority",
-      count: analyticsData?.data?.moderatePriorityCount || 0,
+      count: analyticsData?.analyticsData?.moderatePriorityCount || 0,
     },
     {
       name: "High Priority",
-      count: analyticsData?.data?.highPriorityCount || 0,
+      count: analyticsData?.analyticsData?.highPriorityCount || 0,
     },
     {
       name: "Due Date Tasks",
-      count: analyticsData?.data?.tasksWithDueDateCount || 0,
+      count: analyticsData?.analyticsData?.tasksWithDueDateCount || 0,
     },
   ];
 

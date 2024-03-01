@@ -8,9 +8,7 @@ const DropdownContainer = ({
   return (
     <div
       className={styles.dropdownMenu}
-      // style={{
-      //   transform: isTimeDropdownToggle ? "translateX(-30%)" : undefined,
-      // }}
+      style={isTimeDropdownToggle ? { top: "100%" } : {}}
     >
       <ul>
         {options?.map((option, index) => (
