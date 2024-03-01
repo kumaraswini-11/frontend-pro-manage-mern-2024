@@ -186,8 +186,17 @@ const Card = forwardRef(
         </div>
 
         <div className={styles.optionsSubsection}>
-          <div className={styles.date} style={getTodoItemOptionsStyle(todo)}>
-            {getFormattedDate("2", todo.dueDate)}
+          <div>
+            {todo.dueDate === null || todo.dueDate === "" ? (
+              ""
+            ) : (
+              <div
+                className={styles.date}
+                style={getTodoItemOptionsStyle(todo)}
+              >
+                {getFormattedDate("2", todo.dueDate)}
+              </div>
+            )}
           </div>
           <div className={styles.subOptions}>
             {sections?.map((section) =>

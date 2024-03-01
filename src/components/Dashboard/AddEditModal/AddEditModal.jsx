@@ -1,22 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { toast } from "react-toastify";
 import { FaPlus, FaCircle } from "../../../utils/iconExports.js";
 import { Modal, CustomInput } from "../../index.js";
 import getPriorityIconColor from "../../../utils/getPriorityIconColor.js";
 import getDefaultFormData from "../../../utils/getDefaultFormData.js";
+import { getFormattedDate } from "../../../utils/getFormatedDate.js";
 import {
   useAddTodoMutation,
   useEditExistingTodoMutation,
 } from "../../../redux/api/todoApi.js";
 import styles from "./AddEditModal.module.css";
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
-  const [startDate, setStartDate] = useState();
   const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
-  const [formData, setFormData] = useState(editTodo ?? getDefaultFormData());
+  const [formData, setFormData] = useState(
+    editTodo ? editTodo : getDefaultFormData()
+  );
+  const [startDate, setStartDate] = useState(
+    formData?.dueDate ? formData.dueDate : null
+  );
+
+  useEffect(() => {
+    setStartDate(formData?.dueDate || null);
+  }, [formData?.dueDate]);
+
+  const formattedStartDate = startDate
+    ? getFormattedDate("3", startDate)
+    : "Select Due Date";
+
+  const [addTodo, { isLoading: addTodoLoading }] = useAddTodoMutation();
+  const [editExistingTodo, { isLoading: editTodoLoading }] =
+    useEditExistingTodoMutation();
 
   const handleTitleChange = (e) => {
     const { name, value } = e.target;
@@ -41,7 +57,7 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
     }));
   };
 
-  const handelDeleteTodoItem = (index) => {
+  const handleDeleteTodoItem = (index) => {
     const filteredTodos = formData.todoItems.filter((_, i) => i !== index);
     setFormData({ ...formData, todoItems: filteredTodos });
   };
@@ -72,21 +88,14 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
     return true;
   };
 
-  const [addTodo, { isLoading: addTodoLoading }] = useAddTodoMutation();
-  const [editExistingTodo, { isLoading: editTodoLoading }] =
-    useEditExistingTodoMutation();
+  const mutationFunction = editTodo ? editExistingTodo : addTodo;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     if (validateFormData()) {
-      // console.log(formData);
       try {
-        let res;
-        if (!editTodo) {
-          res = await addTodo(formData).unwrap();
-        } else {
-          res = await editExistingTodo(formData).unwrap();
-        }
+        const res = await mutationFunction(formData).unwrap();
 
         if (res?.success) {
           toast.success(res.message);
@@ -95,15 +104,38 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
           toast.error(res?.error.data.message);
         }
       } catch (error) {
+        console.error("Operation failed:", error);
         toast.error("Operation failed. Please try again.");
       }
+    } else {
+      console.log("Form data is not valid");
     }
   };
+
+  const priorityOptions = ["High", "Moderate", "Low"];
+
+  const renderTodoItems = useMemo(
+    () =>
+      formData.todoItems.map((todoItem, index) => (
+        <CustomInput
+          key={index}
+          value={todoItem.todoText}
+          checked={todoItem.isComplete}
+          onCheckboxChange={() => handleCheckboxChange(index)}
+          onTextInputChange={(event) =>
+            handleTextInputChange(index, event.target.value)
+          }
+          isDelete={true}
+          onDelete={() => handleDeleteTodoItem(index)}
+          isReadOnly={false}
+        />
+      )),
+    [formData.todoItems]
+  );
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} modalWidth={666}>
       <form onSubmit={handleSubmit} className={styles.formFields}>
-        {/* Title */}
         <div className={styles.formFieldTitle}>
           <label htmlFor="title">
             Title<span className={styles.required}>*</span>
@@ -117,12 +149,11 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
             onChange={handleTitleChange}
           />
         </div>
-        {/* Priority */}
         <div className={styles.formFieldPriority}>
           <label>
             Select Priority<span className={styles.required}>*</span>
           </label>
-          {["High", "Moderate", "Low"].map((priority) => (
+          {priorityOptions.map((priority) => (
             <div
               key={priority}
               className={styles.priorityOption}
@@ -146,37 +177,21 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
             </div>
           ))}
         </div>
-        {/* Todo Items */}
         <div className={styles.formFieldTodoItems}>
           <label htmlFor="dueDate">
             Checklist{" "}
             <span>
               (
               {
-                formData?.todoItems?.filter((todoItem) => todoItem.isComplete)
+                formData?.todoItems.filter((todoItem) => todoItem.isComplete)
                   .length
               }
-              /{formData?.todoItems?.length})
+              /{formData?.todoItems.length})
             </span>
             <span className={styles.required}>*</span>
           </label>
           <div className={styles.todoItems}>
-            <div className={styles.todoItemsScroll}>
-              {formData.todoItems.map((todoItem, index) => (
-                <CustomInput
-                  key={index}
-                  value={todoItem.todoText}
-                  checked={todoItem.isComplete}
-                  onCheckboxChange={() => handleCheckboxChange(index)}
-                  onTextInputChange={(event) =>
-                    handleTextInputChange(index, event.target.value)
-                  }
-                  isDelete={true}
-                  onDelete={() => handelDeleteTodoItem(index)}
-                  isReadOnly={false}
-                />
-              ))}
-            </div>
+            <div className={styles.todoItemsScroll}>{renderTodoItems}</div>
             <div className={styles.addNew} onClick={handleAddNewTodo}>
               <FaPlus className={styles.plusIcon} id="addNew" />
               <span htmlFor="addNew">Add New</span>
@@ -184,7 +199,6 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
           </div>
         </div>
       </form>
-      {/* Footer */}
       <div className={styles.footer}>
         <div className={styles.formFieldDueDate}>
           {datePickerIsOpen && (
@@ -192,24 +206,19 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
               selected={startDate}
               onChange={(date) => {
                 setStartDate(date);
-                formData.dueDate = date;
-                // Close DatePicker after selecting a date
                 setDatePickerIsOpen(false);
-                // console.log(startDate);
               }}
-              // Close DatePicker when clicking outside
               onClickOutside={() => setDatePickerIsOpen(false)}
               inline
             />
           )}
-
           <button
             className={`${styles.dueDateButton} ${styles.button}`}
             onClick={() => {
-              setDatePickerIsOpen((prevIsOpen) => !prevIsOpen);
+              setDatePickerIsOpen(true);
             }}
           >
-            {startDate ? startDate.toDateString() : "Select Due Date"}
+            {formattedStartDate}
           </button>
         </div>
         <div className={styles.buttonContainer}>

@@ -47,10 +47,9 @@ const ConfirmModal = ({
     // console.log("Todo is deleting", uniqueId);
     const res = await deleteTodo(uniqueId).unwrap();
     console.log(res);
-    if (isSuccess) {
-      toast("Deleted successfully!");
-    }
-    if (isError) {
+    if (res?.success) {
+      toast(res?.message);
+    } else {
       toast("Having some error try again latter");
     }
     setIsOpen(false);
