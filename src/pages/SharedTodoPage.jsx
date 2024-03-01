@@ -10,7 +10,7 @@ import styles from "../styles/SharedTodoPage.module.css";
 function SharedTodoPage() {
   const { uniqueLinkId } = useParams();
   const { data, isLoading } = useFetchSharedTodoDetailsQuery(uniqueLinkId);
-  // console.log(data.todo);
+  console.log(data.todo);
   return (
     <>
       <header className={styles.header}>
@@ -70,14 +70,16 @@ function SharedTodoPage() {
               </div>
             </div>
 
-            {data?.todo.dueDate !== "" && (
-              <div className={styles.dueDate}>
-                <span>Due Date</span>
-                <span className={styles.dateBox}>
-                  {getFormattedDate("2", data?.todo.dueDate)}
-                </span>
-              </div>
-            )}
+            {data?.todo.dueDate !== "" &&
+              data?.todo.dueDate !== null &&
+              data?.todo.dueDate !== undefined && (
+                <div className={styles.dueDate}>
+                  <span>Due Date</span>
+                  <span className={styles.dateBox}>
+                    {getFormattedDate("2", data?.todo.dueDate)}
+                  </span>
+                </div>
+              )}
           </div>
         ) : (
           <div>This todo doesn't exist or the link is invalid.</div>

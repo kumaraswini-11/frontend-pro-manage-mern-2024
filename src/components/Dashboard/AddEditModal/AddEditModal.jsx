@@ -200,27 +200,30 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
         </div>
       </form>
       <div className={styles.footer}>
-        <div className={styles.formFieldDueDate}>
-          {datePickerIsOpen && (
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => {
-                setStartDate(date);
-                setDatePickerIsOpen(false);
-              }}
-              onClickOutside={() => setDatePickerIsOpen(false)}
-              inline
-            />
-          )}
+        <div style={{ position: "relative" }}>
           <button
             className={`${styles.dueDateButton} ${styles.button}`}
             onClick={() => {
-              setDatePickerIsOpen(true);
+              setDatePickerIsOpen(!datePickerIsOpen);
             }}
           >
             {formattedStartDate}
           </button>
+          {datePickerIsOpen && (
+            <div className={styles.datePickerOverlay}>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => {
+                  setStartDate(date);
+                  setDatePickerIsOpen(false);
+                }}
+                onClickOutside={() => setDatePickerIsOpen(false)}
+                inline
+              />
+            </div>
+          )}
         </div>
+
         <div className={styles.buttonContainer}>
           <button
             onClick={() => setIsOpen(false)}
