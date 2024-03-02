@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, forwardRef } from "react";
 import { toast } from "react-toastify";
 import { FaPlus, FaCircle } from "../../../utils/iconExports.js";
 import { Modal, CustomInput } from "../../index.js";
@@ -16,7 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
   const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
   const [formData, setFormData] = useState(
-    editTodo ? editTodo : getDefaultFormData()
+    editTodo ? { ...editTodo } : getDefaultFormData()
   );
   const [startDate, setStartDate] = useState(
     formData?.dueDate ? formData.dueDate : null
@@ -88,14 +88,14 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
     return true;
   };
 
-  const mutationFunction = editTodo ? editExistingTodo : addTodo;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
     if (validateFormData()) {
       try {
-        const res = await mutationFunction(formData).unwrap();
+        let res;
+        if (editTodo) res = await editExistingTodo(formData).unwrap();
+        else res = await addTodo(formData).unwrap();
 
         if (res?.success) {
           toast.success(res.message);
@@ -114,24 +114,21 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
 
   const priorityOptions = ["High", "Moderate", "Low"];
 
-  const renderTodoItems = useMemo(
-    () =>
-      formData.todoItems.map((todoItem, index) => (
-        <CustomInput
-          key={index}
-          value={todoItem.todoText}
-          checked={todoItem.isComplete}
-          onCheckboxChange={() => handleCheckboxChange(index)}
-          onTextInputChange={(event) =>
-            handleTextInputChange(index, event.target.value)
-          }
-          isDelete={true}
-          onDelete={() => handleDeleteTodoItem(index)}
-          isReadOnly={false}
-        />
-      )),
-    [formData.todoItems]
-  );
+  const renderTodoItems = formData.todoItems.map((todoItem, index) => (
+    <CustomInput
+      key={index}
+      checked={todoItem.isComplete}
+      onCheckboxChange={() => handleCheckboxChange(index)}
+      value={todoItem.todoText}
+      onTextInputChange={(event) =>
+        handleTextInputChange(index, event.target.value)
+      }
+      isDelete={true}
+      onDelete={() => handleDeleteTodoItem(index)}
+      checkboxDisabled={false}
+      textInputDisabled={false}
+    />
+  ));
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} modalWidth={666}>
@@ -215,6 +212,7 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
                 selected={startDate}
                 onChange={(date) => {
                   setStartDate(date);
+                  setFormData((prevData) => ({ ...prevData, dueDate: date }));
                   setDatePickerIsOpen(false);
                 }}
                 onClickOutside={() => setDatePickerIsOpen(false)}

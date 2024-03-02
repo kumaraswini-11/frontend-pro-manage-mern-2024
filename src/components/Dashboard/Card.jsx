@@ -169,7 +169,6 @@ const Card = forwardRef(
             {todo?.todoItems?.map((todoItem, index) => (
               <CustomInput
                 key={todoItem._id}
-                value={todoItem.todoText}
                 checked={checklistState[index]}
                 onCheckboxChange={() =>
                   handleCheckboxChange(
@@ -178,8 +177,9 @@ const Card = forwardRef(
                     !todoItem.isComplete
                   )
                 }
-                // onDelete={() => {}}
-                isReadOnly={true}
+                value={todoItem.todoText}
+                checkboxDisabled={false}
+                textInputDisabled={true}
               />
             ))}
           </div>

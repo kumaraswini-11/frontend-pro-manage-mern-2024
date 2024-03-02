@@ -1,55 +1,61 @@
-/* Custom Input field for dashboard, add and edit modals, and share page */
-
+import React from "react";
 import { FaTrash } from "../../utils/iconExports.js";
 import styles from "./CustomInput.module.css";
 
-// CustomInput component
-// Renders a checkbox input and a text input with optional delete icon
-// Props:
-// - value: text value of the input
-// - checked: boolean value indicating whether checkbox is checked
-// - onCheckboxChange: function to handle checkbox change event
-// - onTextInputChange: function to handle text input change event
-// - isDelete: boolean value indicating whether to show delete icon (default: false)
-// - onDelete: function to handle delete icon click event
-const CustomInput = ({
-  value,
-  checked,
-  onCheckboxChange,
-  onTextInputChange,
-  isDelete = false,
-  onDelete = () => {},
-  isReadOnly = false,
-  // ...props
-}) => {
-  return (
-    <div className={styles.customInputContainer}>
-      {/* Input container containing checkbox and text input */}
-      <div className={styles.inputContainer}>
-        {/* Checkbox input */}
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={onCheckboxChange}
-          className={styles.checkboxInput}
-          // {...(isReadOnly && props)}
-          readOnly={isReadOnly}
-        />
-        {/* Text input */}
-        <input
-          type="text"
-          // defaultValue={value}
-          value={value}
-          onChange={onTextInputChange}
-          className={styles.textInput}
-          // {...(isReadOnly && props)}
-          readOnly={isReadOnly}
-        />
+const CustomInput = React.forwardRef(
+  (
+    {
+      value,
+      checked,
+      onCheckboxChange,
+      onTextInputChange,
+      isDelete = false,
+      onDelete = () => {},
+      checkboxDisabled = false,
+      textInputDisabled = false,
+      ...props
+    },
+    ref
+  ) => {
+    // Styles for disabled inputs
+    const disabledInputStyle = {
+      cursor: "not-allowed",
+      // opacity: 0.5,
+    };
+
+    return (
+      <div className={styles.customInputContainer}>
+        <div className={styles.inputContainer}>
+          {/* Checkbox input */}
+          <input
+            type="checkbox"
+            checked={checked}
+            onChange={onCheckboxChange}
+            className={styles.checkboxInput}
+            style={checkboxDisabled ? disabledInputStyle : null}
+            disabled={checkboxDisabled}
+            {...props}
+            ref={ref}
+          />
+          {/* Text input */}
+          <input
+            type="text"
+            value={value}
+            onChange={onTextInputChange}
+            className={styles.textInput}
+            style={textInputDisabled ? disabledInputStyle : null}
+            disabled={textInputDisabled}
+            {...props}
+            ref={ref}
+          />
+        </div>
+        {/* Delete icon if required */}
+        {isDelete && (
+          <FaTrash onClick={onDelete} className={styles.deleteIcon} />
+        )}
       </div>
-      {/* Delete icon (optional) */}
-      {isDelete && <FaTrash onClick={onDelete} className={styles.deleteIcon} />}
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default CustomInput;

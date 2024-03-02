@@ -15,6 +15,9 @@ main {
   background-color: #fff;
   color: #000000;
 }
+input {
+  cursor: not-allowed;
+}
 
 .header {
   font-family: "Poppins", sans-serif;
@@ -70,6 +73,8 @@ main {
   font-size: 22px;
   color: #000000;
   margin-bottom: 2rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .checklist {

@@ -10,7 +10,7 @@ import styles from "../styles/SharedTodoPage.module.css";
 function SharedTodoPage() {
   const { uniqueLinkId } = useParams();
   const { data, isLoading } = useFetchSharedTodoDetailsQuery(uniqueLinkId);
-  console.log(data.todo);
+  // console.log(data.todo);
   return (
     <>
       <header className={styles.header}>
@@ -61,9 +61,10 @@ function SharedTodoPage() {
                   {data.todo.todoItems.map((todoItem) => (
                     <CustomInput
                       key={todoItem._id}
-                      value={todoItem.todoText}
                       checked={todoItem.isComplete}
-                      isReadOnly={true}
+                      value={todoItem.todoText}
+                      checkboxDisabled={true}
+                      textInputDisabled={true}
                     />
                   ))}
                 </div>
