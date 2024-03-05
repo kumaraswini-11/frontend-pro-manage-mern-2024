@@ -32,11 +32,11 @@ const Dashboard = () => {
   } = useFetchAllTodosByTimePeriodQuery(
     menuOptions.find((option) => option.label === selectedOption)?.action
   );
-  console.log(
-    useFetchAllTodosByTimePeriodQuery(
-      menuOptions.find((option) => option.label === selectedOption)?.action
-    )
-  );
+  // console.log(
+  //   useFetchAllTodosByTimePeriodQuery(
+  //     menuOptions.find((option) => option.label === selectedOption)?.action
+  //   )
+  // );
 
   const handleSelectedOption = (action) => {
     const timeStampLabel = menuOptions.find(
