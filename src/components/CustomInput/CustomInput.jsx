@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FaTrash } from "../../utils/iconExports.js";
 import styles from "./CustomInput.module.css";
 
@@ -17,6 +17,10 @@ const CustomInput = React.forwardRef(
     },
     ref
   ) => {
+    // Create separate refs for checkbox and text input
+    const checkboxRef = useRef(null);
+    const textInputRef = useRef(null);
+
     // Styles for disabled inputs
     const disabledInputStyle = {
       cursor: "not-allowed",
@@ -35,7 +39,7 @@ const CustomInput = React.forwardRef(
             style={checkboxDisabled ? disabledInputStyle : null}
             disabled={checkboxDisabled}
             {...props}
-            ref={ref}
+            ref={checkboxRef}
           />
           {/* Text input */}
           <input
@@ -46,7 +50,7 @@ const CustomInput = React.forwardRef(
             style={textInputDisabled ? disabledInputStyle : null}
             disabled={textInputDisabled}
             {...props}
-            ref={ref}
+            ref={textInputRef}
           />
         </div>
         {/* Delete icon if required */}

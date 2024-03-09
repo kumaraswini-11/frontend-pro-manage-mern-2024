@@ -35,6 +35,10 @@ const Card = forwardRef(
     const [checklistState, setChecklistState] = useState(
       todo.todoItems.map((todoItem) => todoItem.isComplete)
     );
+    // const [checklistState, setChecklistState] = useState(
+    //   todo.todoItems.map((todoItem) => ({ ...todoItem }))
+    // );
+
     const [selectedOption, setSelectedOption] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);

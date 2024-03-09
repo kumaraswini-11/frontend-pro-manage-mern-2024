@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, forwardRef } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { FaPlus, FaCircle } from "../../../utils/iconExports.js";
 import { Modal, CustomInput } from "../../index.js";
@@ -18,9 +18,7 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
   const [formData, setFormData] = useState(
     editTodo ? { ...editTodo } : getDefaultFormData()
   );
-  const [startDate, setStartDate] = useState(
-    formData?.dueDate ? formData.dueDate : null
-  );
+  const [startDate, setStartDate] = useState(formData?.dueDate || null);
 
   useEffect(() => {
     setStartDate(formData?.dueDate || null);
@@ -42,19 +40,39 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
     }));
   };
 
+  // const handleTextInputChange = (index, newText) => {
+  //   const updatedTodoItems = [...formData?.todoItems];
+  //   updatedTodoItems[index].todoText = newText;
+  //   setFormData({ ...formData, todoItems: updatedTodoItems });
+  // };
   const handleTextInputChange = (index, newText) => {
-    const updatedTodoItems = [...formData?.todoItems];
-    updatedTodoItems[index].todoText = newText;
-    setFormData({ ...formData, todoItems: updatedTodoItems });
+    setFormData((prevData) => {
+      const updatedTodoItems = [...prevData.todoItems];
+      updatedTodoItems[index] = {
+        ...updatedTodoItems[index],
+        todoText: newText,
+      };
+      return { ...prevData, todoItems: updatedTodoItems };
+    });
   };
 
+  // const handleCheckboxChange = (index) => {
+  //   const newTodoItems = [...formData?.todoItems];
+  //   newTodoItems[index].isComplete = !newTodoItems[index].isComplete;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     todoItems: newTodoItems,
+  //   }));
+  // };
   const handleCheckboxChange = (index) => {
-    const newTodoItems = [...formData?.todoItems];
-    newTodoItems[index].isComplete = !newTodoItems[index].isComplete;
-    setFormData((prevData) => ({
-      ...prevData,
-      todoItems: newTodoItems,
-    }));
+    setFormData((prevData) => {
+      const newTodoItems = [...prevData.todoItems];
+      newTodoItems[index] = {
+        ...newTodoItems[index],
+        isComplete: !newTodoItems[index].isComplete,
+      };
+      return { ...prevData, todoItems: newTodoItems };
+    });
   };
 
   const handleDeleteTodoItem = (index) => {
@@ -90,7 +108,6 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     if (validateFormData()) {
       try {
         let res;
@@ -107,8 +124,6 @@ const AddEditModal = ({ isOpen, setIsOpen, editTodo }) => {
         console.error("Operation failed:", error);
         toast.error("Operation failed. Please try again.");
       }
-    } else {
-      console.log("Form data is not valid");
     }
   };
 

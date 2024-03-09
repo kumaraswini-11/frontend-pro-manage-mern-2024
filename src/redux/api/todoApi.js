@@ -9,12 +9,13 @@ export const todoApi = api.injectEndpoints({
       query: (timePeriod) => `todo/allTodos/?timePeriod=${timePeriod}`,
       // transformResponse: (response) => response.reverse(),
       providesTags: ["Todos"],
+      // providesTags: (result, error, timePeriod) =>
+      //   timePeriod ? [{ type: "Todos" }] : [],
     }),
 
     fetchAnalytics: builder.query({
       query: (userId) => `todo/analytics/${userId}`,
-      // providesTags: (result, error, userId) =>
-      //   userId ? [{ type: "Todos" }] : [],
+      // providesTags: (result, error, userId) => userId ? [{ type: "Todos" }] : [],
     }),
 
     addTodo: builder.mutation({
