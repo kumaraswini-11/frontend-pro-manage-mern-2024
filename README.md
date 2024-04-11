@@ -1,121 +1,49 @@
-#### https://ideabook.club/share/7c3d6d29-5469-450c-add3-100232550653/
+# Task Management System
 
-# React + Vite
+![Task Management System Logo](link/to/logo.png)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+The Task Management System is a comprehensive platform for creating, managing, and collaborating on tasks. It enables users to register, log in, and perform various actions like task creation, updates, and deletions. Additionally, users can view analytics and filter tasks based on different timeframes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Deployed Application**: [Task Management System](https://frontend-pro-manage-mern-2024.vercel.app/)  
+- **Backend Repository**: [Task Management System Backend](https://github.com/kumaraswini-11/backend-pro-manage-mern-2024)
+- **Figma Design**: [Task Management System Design](https://www.figma.com/file/e3Hc8fJeeHPLGD4i2VhPLk/Pro-Manage?type=design&node-id=1%3A606&mode=design&t=0t62GPgXxHxI2SAm-1)
+  <!-- https://ideabook.club/share/7c3d6d29-5469-450c-add3-100232550653/ -->
 
-=============================================
+## Features
 
-````javascript
-const dummyData = [
-  {
-    userId: "609a04596b2a0a00157b4c63",
-    title: "Complete Project Proposal",
-    priority: "High",
-    dueDate: "2024-03-10T09:00:00.000Z",
-    section: "Todo",
-    link: "a2b93f1a-3e56-4b39-baa2-9e0a6158c3e3",
-    todoItems: [
-      {
-        todoText: "Research on project topic",
-        isComplete: true
-      },
-      {
-        todoText: "Write project outline",
-        isComplete: false
-      },
-      {
-        todoText: "Gather necessary resources",
-        isComplete: false
-      }
-    ]
-  },
-  {
-    userId: "609a04596b2a0a00157b4c64",
-    title: "Plan Weekend Trip",
-    priority: "Moderate",
-    dueDate: "2024-03-05T15:00:00.000Z",
-    section: "Backlog",
-    link: "dab5e84e-78d5-4ae4-9aa6-30260e1064f5",
-    todoItems: [
-      {
-        todoText: "Choose destination",
-        isComplete: true
-      },
-      {
-        todoText: "Book accommodations",
-        isComplete: true
-      },
-      {
-        todoText: "Plan activities",
-        isComplete: false
-      }
-    ]
-  },
-  {
-    userId: "609a04596b2a0a00157b4c65",
-    title: "Prepare for Presentation",
-    priority: "High",
-    dueDate: "2024-03-08T11:00:00.000Z",
-    section: "In Progress",
-    link: "9e2bf2e1-b4bb-4a26-aeb4-99fb1637c46e",
-    todoItems: [
-      {
-        todoText: "Gather data",
-        isComplete: true
-      },
-      {
-        todoText: "Create slides",
-        isComplete: false
-      },
-      {
-        todoText: "Practice presentation",
-        isComplete: false
-      }
-    ]
-  },
-  {
-    userId: "609a04596b2a0a00157b4c66",
-    title: "Shopping List",
-    priority: "Low",
-    dueDate: "2024-03-06T18:00:00.000Z",
-    section: "Done",
-    link: "67fc2dbb-1d13-49c7-8e7a-90c7b3d84834",
-    todoItems: [
-      {
-        todoText: "Buy groceries",
-        isComplete: true
-      },
-      {
-        todoText: "Purchase household items",
-        isComplete: true
-      }
-    ]
-  },
-  {
-    userId: "609a04596b2a0a00157b4c67",
-    title: "Exercise Routine",
-    priority: "Moderate",
-    dueDate: "2024-03-07T07:00:00.000Z",
-    section: "Todo",
-    link: "15487a5e-9657-4940-a9b3-ebd1223a0375",
-    todoItems: [
-      {
-        todoText: "Go for a run",
-        isComplete: false
-      },
-      {
-        todoText: "Do strength training",
-        isComplete: false
-      }
-    ]
-  },
-];```
+1. **User Authentication**: Secure registration and login system. Only authenticated users can create tasks.
+2. **Task Creation**: Users can create tasks with customizable properties like priority, due dates (optional), and task lists. Tasks can be shared with others for read-only access.
+3. **Settings**: Personalize your account by updating your name or password securely from the settings page.
+4. **Analytics**: Get insights into task performance and user activity with comprehensive analytics.
+5. **Task Management**: Easily manage tasks by moving them between different states such as backlog, to-do, in-progress, and done.
+6. **Deadline Notifications**: Stay on track with deadline reminders. Overdue tasks are visually highlighted for attention.
+7. **Task Status Indicators**: Instantly identify task status changes with color-coded indicators.
+8. **Task Deletion**: Remove unwanted tasks effortlessly.
+9. **Task Editing**: Modify task details as needed.
+10. **Task Filtering**: Filter tasks by timeframe - choose from today, this week, or this month. Default filter is set to this week.
+11. **Toast Messages**: Receive informative toast messages for important actions and updates.
+12. **Mandatory Fields**: Ensure data integrity by marking mandatory fields with clear indicators.
+13. **Title Clipping**: Long task titles are intelligently clipped with tooltip support for full visibility.
+14. **Mandatory Field Marking**: Clearly identify mandatory fields with visible markers for ease of use.
+15. **Filter Timeframes**: Define timeframes accurately for "this week" and "this month" filters.
 
+## Usage
 
-````
+1. **Clone the repository**: `git clone https://github.com/kumaraswini-11/frontend-quiz-app-mern-2024.git`
+2. **Install dependencies**: `npm install`
+3. **Start the development server**: `npm run dev`
+4. **Access the application**: Open your browser and navigate to `http://localhost:3000`
+
+**Sample Login Credentials**:
+- Email: sitaram@gmail.com
+- Password: 123456789
+
+## Contributing
+
+Contributions are welcomed! If you have suggestions, bug reports, or feature requests, feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
