@@ -1,14 +1,14 @@
 # Task Management System
 
-![Task Management System Logo](link/to/logo.png)
+<!-- ![Task Management System Logo](link/to/logo.png) -->
 
 ## Overview
 
 The Task Management System is a comprehensive platform for creating, managing, and collaborating on tasks. It enables users to register, log in, and perform various actions like task creation, updates, and deletions. Additionally, users can view analytics and filter tasks based on different timeframes.
 
+- **Figma Design**: [Task Management System Design](https://www.figma.com/file/e3Hc8fJeeHPLGD4i2VhPLk/Pro-Manage?type=design&node-id=1%3A606&mode=design&t=0t62GPgXxHxI2SAm-1)
 - **Deployed Application**: [Task Management System](https://frontend-pro-manage-mern-2024.vercel.app/)  
 - **Backend Repository**: [Task Management System Backend](https://github.com/kumaraswini-11/backend-pro-manage-mern-2024)
-- **Figma Design**: [Task Management System Design](https://www.figma.com/file/e3Hc8fJeeHPLGD4i2VhPLk/Pro-Manage?type=design&node-id=1%3A606&mode=design&t=0t62GPgXxHxI2SAm-1)
   <!-- https://ideabook.club/share/7c3d6d29-5469-450c-add3-100232550653/ -->
 
 ## Features
@@ -39,11 +39,15 @@ The Task Management System is a comprehensive platform for creating, managing, a
 **Sample Login Credentials**:
 - Email: sitaram@gmail.com
 - Password: 123456789
-
+ 
 ## Contributing
 
 Contributions are welcomed! If you have suggestions, bug reports, or feature requests, feel free to open an issue or submit a pull request.
 
+<!--
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+-->
+
+Made with ❤️
